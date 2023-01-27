@@ -1,5 +1,6 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/widgets/appbar.dart';
 import 'package:movie_app/widgets/bottom_navbar.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,23 +14,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Filip\'s Movie App',
-          ),
-        ),
+        appBar: const AppbarWidget(),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'You have pushed the button this many times:',
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Popular movies',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
           ),
         ),
         bottomNavigationBar: const BottomNavbar());

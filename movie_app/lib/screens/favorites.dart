@@ -1,5 +1,6 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/widgets/appbar.dart';
 import 'package:movie_app/widgets/bottom_navbar.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -13,11 +14,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Filip\'s Movie App',
-          ),
-        ),
+        appBar: const AppbarWidget(),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),
           child: Center(
