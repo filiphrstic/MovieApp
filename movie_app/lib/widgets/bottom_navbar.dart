@@ -24,14 +24,16 @@ class BottomNavbar extends StatelessWidget {
           ],
           currentIndex: state.index,
           onTap: (index) {
-            if (index == 0) {
-              BlocProvider.of<NavigationCubit>(context)
-                  .getNavBarItem(BottomNavbarItem.homepage);
-              Navigator.popAndPushNamed(context, homeScreenRoute);
-            } else if (index == 1) {
-              BlocProvider.of<NavigationCubit>(context)
-                  .getNavBarItem(BottomNavbarItem.favorites);
-              Navigator.pushNamed(context, favoritesScreenRoute);
+            if (index != state.index) {
+              if (index == 0) {
+                BlocProvider.of<NavigationCubit>(context)
+                    .getNavBarItem(BottomNavbarItem.homepage);
+                Navigator.popAndPushNamed(context, homeScreenRoute);
+              } else if (index == 1) {
+                BlocProvider.of<NavigationCubit>(context)
+                    .getNavBarItem(BottomNavbarItem.favorites);
+                Navigator.popAndPushNamed(context, favoritesScreenRoute);
+              }
             }
           });
     });
