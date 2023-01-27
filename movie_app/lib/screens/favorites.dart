@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/widgets/bottom_navbar.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +22,8 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'You have pushed the button this many times:',
-                style: Theme.of(context).textTheme.headline2,
+                'Favorites',
+                // style: Theme.of(context).textTheme.headline2,
               ),
             ],
           ),

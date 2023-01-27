@@ -1,0 +1,1 @@
+enum BottomNavbarItem { homepage, favorites }
