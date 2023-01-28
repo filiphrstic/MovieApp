@@ -18,11 +18,13 @@ class _MyHomePageState extends State<MyHomePage> {
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Popular movies',
-                style: Theme.of(context).textTheme.titleLarge,
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Popular movies',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
             ],
           ),
