@@ -4,7 +4,7 @@ class Movie {
   final String overview;
   final String posterPath;
   final String releaseDate;
-  final double voteAverage;
+  final String voteAverage;
 
   Movie({
     required this.id,
@@ -22,7 +22,7 @@ class Movie {
       overview: json['overview'],
       posterPath: json['poster_path'],
       releaseDate: json['release_date'],
-      voteAverage: json['vote_average'],
+      voteAverage: json['vote_average'].toString(),
     );
   }
 }
