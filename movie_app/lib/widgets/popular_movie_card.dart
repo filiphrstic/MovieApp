@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/classes/popular_movies_response.dart';
+import 'package:movie_app/navigation/routes.dart';
+import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 
 Widget buildPopularMovieCard(
     BuildContext context, PopularMoviesResponse popularMoviesResponse) {
   return Expanded(
     child: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: popularMoviesResponse.popularMoviesList!.length,
-        itemBuilder: ((context, index) {
-          return Container(
-            margin: const EdgeInsets.all(10.0),
-            child: Card(
+      scrollDirection: Axis.vertical,
+      itemCount: popularMoviesResponse.popularMoviesList!.length,
+      itemBuilder: ((context, index) {
+        return Container(
+          margin: const EdgeInsets.all(10.0),
+          child: Card(
+            child: InkWell(
+              onTap: () {
+                ChosenMovie chosenMovie = ChosenMovie(
+                    popularMoviesResponse.popularMoviesList![index]);
+                Navigator.pushNamed(context, movieDetailsScreenRoute,
+                    arguments: chosenMovie);
+              },
               child: Container(
                 margin: const EdgeInsets.all(10.0),
                 child: Row(
@@ -38,8 +47,11 @@ Widget buildPopularMovieCard(
                               softWrap: true,
                             ),
                           ),
-                          Text(popularMoviesResponse
-                              .popularMoviesList![index].releaseDate),
+                          Text(
+                            popularMoviesResponse
+                                .popularMoviesList![index].releaseDate,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         ],
                       ),
                     ),
@@ -47,7 +59,9 @@ Widget buildPopularMovieCard(
                 ),
               ),
             ),
-          );
-        })),
+          ),
+        );
+      }),
+    ),
   );
 }

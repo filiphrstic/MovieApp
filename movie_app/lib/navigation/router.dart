@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/navigation/routes.dart';
+import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/screens/favorites.dart';
 import 'package:movie_app/screens/homepage.dart';
+import 'package:movie_app/screens/movie_details.dart';
 import 'package:movie_app/screens/undefined_route.dart';
 
 Route generateRoute(RouteSettings routeSettings) {
@@ -12,6 +15,12 @@ Route generateRoute(RouteSettings routeSettings) {
     // Favorites
     case favoritesScreenRoute:
       return MaterialPageRoute(builder: (context) => const FavoritesPage());
+    // Movie details
+    case movieDetailsScreenRoute:
+      ChosenMovie chosenMovieArgument = routeSettings.arguments as ChosenMovie;
+      return MaterialPageRoute(
+          builder: (context) =>
+              MovieDetailsPage(chosenMovie: chosenMovieArgument));
     // Any other undefined screen
     default:
       return MaterialPageRoute(builder: (context) => const UndefinedScreen());
