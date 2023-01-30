@@ -21,7 +21,8 @@ Widget buildPopularMoviesList(PopularMoviesBloc popularMoviesBloc) {
           } else if (state is PopularMoviesLoading) {
             return buildLoading();
           } else if (state is PopularMoviesLoaded) {
-            return buildPopularMovieCard(context, state.popularMoviesResponse);
+            return buildPopularMovieCard(
+                context, state.popularMoviesResponse.popularMoviesList!);
           } else if (state is PopularMoviesError) {
             return Container();
           } else {

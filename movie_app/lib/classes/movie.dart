@@ -1,4 +1,6 @@
-class Movie {
+import 'package:equatable/equatable.dart';
+
+class Movie extends Equatable {
   final int id;
   final String originalTitle;
   final String overview;
@@ -25,4 +27,19 @@ class Movie {
       voteAverage: json['vote_average'].toString(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'original_title': originalTitle,
+      'overview': overview,
+      'poster_path': posterPath,
+      'release_date': releaseDate,
+      'vote_average': voteAverage
+    };
+  }
+
+  @override
+  List<Object?> get props =>
+      [id, originalTitle, overview, posterPath, releaseDate, voteAverage];
 }

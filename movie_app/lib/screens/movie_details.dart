@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 import 'package:movie_app/widgets/appbar.dart';
@@ -75,12 +76,15 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async {
                     final snackbarMessage = SnackBar(
                       content: Text(
                           '${widget.chosenMovie.chosenMovie.originalTitle} added to favorites'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackbarMessage);
+                    final test = await FileHandler.instance
+                        .writeMovie(widget.chosenMovie.chosenMovie);
+                    // print(test);
                   },
                   icon: const Icon(Icons.favorite),
                   label: const Text('Add to favorites'),
@@ -93,4 +97,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
       bottomNavigationBar: const BottomNavbar(),
     );
   }
+
+  void saveFavoriteToLocalStorage() {}
 }
