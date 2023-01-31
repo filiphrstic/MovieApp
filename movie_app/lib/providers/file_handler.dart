@@ -36,8 +36,11 @@ class FileHandler {
 
   Future<void> writeMovie(Movie favoriteMovie) async {
     final File fl = await file;
-    movieSet.add(favoriteMovie);
+    if (!fl.existsSync()) {
+      _initFile();
+    }
 
+    movieSet.add(favoriteMovie);
     // Now convert the set to a list as the jsonEncoder cannot encode
     // a set but a list.
     final movieListMap = movieSet.map((e) => e.toJson()).toList();
@@ -47,8 +50,10 @@ class FileHandler {
 
   Future<List<Movie>> readFavoriteMovies() async {
     final File fl = await file;
-    final content = await fl.readAsString();
-
+    String content = "";
+    if (fl.existsSync()) {
+      content = await fl.readAsString();
+    }
     if (content.isEmpty) {
       return [];
     } else {

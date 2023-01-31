@@ -16,23 +16,16 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   List<Movie> favouriteMoviesList = [];
 
-  readFavoriteMovies() async {
-    favouriteMoviesList = await FileHandler.instance
-        .readFavoriteMovies()
-        .then((value) => favouriteMoviesList = value);
-    // return favouriteMoviesList;
-    // favouriteMoviesList.forEach((element) {
-    //   print("favorite movie:  " + element.originalTitle);
-    // });
-    // if (favouriteMoviesList.isEmpty) {
-    //   print("prazno");
-    // } else
-    //   print("nije prazno");
-  }
+  // readFavoriteMovies() async {
+  //   favouriteMoviesList = await FileHandler.instance
+  //       .readFavoriteMovies()
+  //       .then((value) => favouriteMoviesList = value);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // List<Movie> favouriteMoviesList = readFavoriteMovies();
+    // readFavoriteMovies();
+
     return Scaffold(
         appBar: const AppbarWidget(),
         body: DoubleBackToCloseApp(
