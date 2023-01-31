@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              buildPopularMoviesList(popularMoviesBloc),
+              buildPopularMoviesList(popularMoviesBloc, false),
             ],
           ),
         ),

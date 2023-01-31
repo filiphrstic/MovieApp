@@ -16,6 +16,12 @@ class PopularMoviesLoaded extends PopularMoviesState {
   const PopularMoviesLoaded(this.popularMoviesResponse);
 }
 
+//za favorite
+class FavoriteMoviesLoaded extends PopularMoviesState {
+  final List<Movie> favoriteMoviesResponse;
+  const FavoriteMoviesLoaded(this.favoriteMoviesResponse);
+}
+
 class PopularMoviesError extends PopularMoviesState {
   final String? message;
   const PopularMoviesError(this.message);
