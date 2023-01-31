@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movie_app/blocs/cast_members_bloc/cast_members_bloc.dart';
 import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
-import 'package:movie_app/widgets/appbar.dart';
-import 'package:movie_app/widgets/bottom_navbar.dart';
+import 'package:movie_app/widgets/bars/appbar.dart';
+import 'package:movie_app/widgets/bars/bottom_navbar.dart';
+import 'package:movie_app/widgets/cast_members/cast_members_list.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final ChosenMovie chosenMovie;
@@ -14,6 +16,14 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  final CastMembersBloc castMembersBloc = CastMembersBloc();
+
+  @override
+  void initState() {
+    castMembersBloc.add(GetCastMembersList(widget.chosenMovie.chosenMovie.id));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,6 +99,21 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   icon: const Icon(Icons.favorite),
                   label: const Text('Add to favorites'),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Cast',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 400,
+                child: buildCastMembersList(
+                    castMembersBloc, widget.chosenMovie.chosenMovie.id),
               ),
             ],
           ),

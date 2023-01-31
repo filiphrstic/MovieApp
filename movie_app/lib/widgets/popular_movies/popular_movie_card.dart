@@ -29,7 +29,7 @@ Widget buildPopularMovieCard(
                     Image.network(
                         EnvironmentConfig.IMAGE_BASE_URL +
                             popularMoviesList[index].posterPath,
-                        scale: 1.5),
+                        scale: 1.65),
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                       child: Column(
