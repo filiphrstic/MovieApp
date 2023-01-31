@@ -92,7 +92,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           '${widget.chosenMovie.chosenMovie.originalTitle} added to favorites'),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackbarMessage);
-                    final test = await FileHandler.instance
+                    await FileHandler.instance
                         .writeMovie(widget.chosenMovie.chosenMovie);
                     // print(test);
                   },
@@ -111,7 +111,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 ),
               ),
               SizedBox(
-                height: 400,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: buildCastMembersList(
                     castMembersBloc, widget.chosenMovie.chosenMovie.id),
               ),

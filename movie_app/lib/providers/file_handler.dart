@@ -47,7 +47,6 @@ class FileHandler {
 
   Future<List<Movie>> readFavoriteMovies() async {
     final File fl = await file;
-    print('path: ' + fl.path);
     final content = await fl.readAsString();
 
     if (content.isEmpty) {

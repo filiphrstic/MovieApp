@@ -11,10 +11,10 @@ class TmdbProvider {
   Future<PopularMoviesResponse> fetchPopularMovies() async {
     try {
       Response response = await dio.get(urlPopularMovies);
-      print(response.data.toString());
+      // print(response.data.toString());
       return PopularMoviesResponse.fromJson(response.data);
-    } catch (error, stacktrace) {
-      print("Exception occured: $error stackTrace: $stacktrace");
+    } catch (error) {
+      // print("Exception occured: $error stackTrace: $stacktrace");
       return PopularMoviesResponse.withError(
           "Data not found / Connection issue");
     }
@@ -25,10 +25,10 @@ class TmdbProvider {
         '${EnvironmentConfig.BASE_URL}movie/$movieID/credits?api_key=${EnvironmentConfig.API_KEY}';
     try {
       Response response = await dio.get(urlCastMembers);
-      print(response.data.toString());
+      // print(response.data.toString());
       return CastMembersResponse.fromJson(response.data);
-    } catch (error, stacktrace) {
-      print("Exception occured: $error stackTrace: $stacktrace");
+    } catch (error) {
+      // print("Exception occured: $error stackTrace: $stacktrace");
       return CastMembersResponse.withError("Data not found / Connection issue");
     }
   }

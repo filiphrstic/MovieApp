@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/cast_members_bloc/cast_members_bloc.dart';
-import 'package:movie_app/blocs/popular_movies_bloc/popular_movies_bloc.dart';
 import 'package:movie_app/widgets/cast_members/cast_member_card.dart';
-import 'package:movie_app/widgets/popular_movies/popular_movie_card.dart';
 
 Widget buildCastMembersList(CastMembersBloc castMembersBloc, int movieID) {
   return BlocProvider(
