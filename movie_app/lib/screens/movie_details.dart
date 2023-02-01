@@ -1,16 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/add_to_favorites_bloc/add_to_favorites_bloc.dart';
 import 'package:movie_app/blocs/cast_members_bloc/cast_members_bloc.dart';
-import 'package:movie_app/blocs/popular_movies_bloc/popular_movies_bloc.dart';
-import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
 import 'package:movie_app/widgets/cast_members/cast_members_list.dart';
-import 'package:movie_app/widgets/popular_movies/popular_movies_list.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final ChosenMovie chosenMovie;
@@ -23,12 +19,10 @@ class MovieDetailsPage extends StatefulWidget {
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   final CastMembersBloc castMembersBloc = CastMembersBloc();
   final AddToFavoritesBloc addToFavoritesBloc = AddToFavoritesBloc();
-  // final PopularMoviesBloc popularMoviesBloc = PopularMoviesBloc();
 
   @override
   void initState() {
     castMembersBloc.add(GetCastMembersList(widget.chosenMovie.chosenMovie.id));
-    // popularMoviesBloc.add(GetFavoriteMoviesList());
     super.initState();
   }
 
@@ -125,7 +119,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           addToFavoritesBloc.add(AddToFavoritesClickEvent(
                               widget.chosenMovie.chosenMovie,
                               state.movieAdded));
-                          print(state.buttonString);
                         },
                         icon: const Icon(Icons.favorite),
                         label: Text(state.buttonString),
@@ -137,7 +130,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                           addToFavoritesBloc.add(AddToFavoritesClickEvent(
                               widget.chosenMovie.chosenMovie,
                               state.movieAddedToFavorites));
-                          print(state.buttonString);
                         },
                         icon: const Icon(Icons.favorite),
                         label: Text(state.buttonString),
@@ -145,20 +137,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                     } else {
                       return Container();
                     }
-
-                    // if (state is AddToFavoritesLoaded) {
-                    //   return ElevatedButton.icon(
-                    //     onPressed: () async {
-                    //       addToFavoritesBloc.add(AddToFavoritesClickEvent(
-                    //           widget.chosenMovie.chosenMovie));
-                    //       print(state.addToFavoritesString);
-                    //     },
-                    //     icon: const Icon(Icons.favorite),
-                    //     label: Text(state.addToFavoritesString),
-                    //   );
-                    // } else {
-                    //   return Container();
-                    // }
                   }),
                 ),
                 Padding(

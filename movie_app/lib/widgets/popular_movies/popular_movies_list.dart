@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/popular_movies_bloc/popular_movies_bloc.dart';
-import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/widgets/popular_movies/popular_movie_card.dart';
 
 Widget buildPopularMoviesList(
