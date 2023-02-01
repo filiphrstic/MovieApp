@@ -50,6 +50,9 @@ class FileHandler {
     List<Movie> oldFavoriteMovies = [];
     oldFavoriteMovies =
         await readFavoriteMovies().then((value) => oldFavoriteMovies = value);
+    // if (oldFavoriteMovies.contains(favoriteMovie)) {
+    // return false;
+    // } else {
     movieSet = oldFavoriteMovies.toSet();
     movieSet.add(favoriteMovie);
     // Now convert the set to a list as the jsonEncoder cannot encode
@@ -57,6 +60,8 @@ class FileHandler {
     final movieListMap = movieSet.map((e) => e.toJson()).toList();
 
     await fl.writeAsString(jsonEncode(movieListMap));
+    // return true;
+    // }
   }
 
   Future<List<Movie>> readFavoriteMovies() async {
@@ -80,7 +85,13 @@ class FileHandler {
 
   Future<void> deleteFavoriteMovie(Movie favoriteMovie) async {
     final File fl = await file;
-
+    List<Movie> oldFavoriteMovies = [];
+    oldFavoriteMovies =
+        await readFavoriteMovies().then((value) => oldFavoriteMovies = value);
+    // if (oldFavoriteMovies.contains(favoriteMovie)) {
+    // return false;
+    // } else {
+    movieSet = oldFavoriteMovies.toSet();
     movieSet.removeWhere((e) => e == favoriteMovie);
     final movieListMap = movieSet.map((e) => e.toJson()).toList();
 

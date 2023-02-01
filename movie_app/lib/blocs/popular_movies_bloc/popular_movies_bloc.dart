@@ -29,16 +29,11 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
     on<GetFavoriteMoviesList>((event, emit) async {
       try {
         emit(PopularMoviesLoading());
-        // final response = await tmdbProvider.fetchPopularMovies();
         List<Movie> response = [];
         response = await FileHandler.instance
             .readFavoriteMovies()
             .then((value) => response = value);
-
         emit(FavoriteMoviesLoaded(response));
-        // if (response.error != null) {
-        // emit(PopularMoviesError(response.error));
-        // }
       } on NetworkError {
         emit(const PopularMoviesError(
             "Unable to fetch data. Please check your internet connection!"));

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/popular_movies_bloc/popular_movies_bloc.dart';
+import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/widgets/popular_movies/popular_movie_card.dart';
 
-Widget buildPopularMoviesList(PopularMoviesBloc popularMoviesBloc, bool fav) {
+Widget buildPopularMoviesList(
+    PopularMoviesBloc popularMoviesBloc, bool favoriteBool) {
   return BlocProvider(
     create: (_) => popularMoviesBloc,
     child: BlocListener<PopularMoviesBloc, PopularMoviesState>(
@@ -20,10 +22,10 @@ Widget buildPopularMoviesList(PopularMoviesBloc popularMoviesBloc, bool fav) {
             return buildLoading();
           } else if (state is PopularMoviesLoading) {
             return buildLoading();
-          } else if (state is PopularMoviesLoaded && !fav) {
+          } else if (state is PopularMoviesLoaded && !favoriteBool) {
             return buildPopularMovieCard(
                 context, state.popularMoviesResponse.popularMoviesList!);
-          } else if (state is FavoriteMoviesLoaded && fav) {
+          } else if (state is FavoriteMoviesLoaded && favoriteBool) {
             return buildPopularMovieCard(context, state.favoriteMoviesResponse);
           } else if (state is PopularMoviesError) {
             return Container();
