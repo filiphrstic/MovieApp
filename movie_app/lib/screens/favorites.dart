@@ -41,11 +41,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Favorites',
-                  style: Theme.of(context).textTheme.headline2,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'Favorite movies',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
                 ),
-                // buildPopularMovieCard(context, favouriteMoviesList)
                 buildPopularMoviesList(popularMoviesBloc, true),
               ],
             ),

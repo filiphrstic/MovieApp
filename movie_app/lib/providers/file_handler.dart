@@ -13,16 +13,27 @@ class FileHandler {
 
 // Get the data file
   Future<File> get file async {
-    if (_file != null) return _file!;
+    if (_file != null) {
+      return _file!;
+    } else {
+      final directory = await getApplicationDocumentsDirectory();
+      final path = directory.path;
+      if (File('$path/$_fileName').existsSync()) {
+        _file = File('$path/$_fileName');
+        return _file!;
+      }
+      // if (file.existsSync()) {
+      //   _file = file;
+      //   return _file!;
+      // }
+      else {
+        _file = await _initFile();
+        return _file!;
+      }
+    }
 
-    _file = await _initFile();
-    return _file!;
-    // if (_file!.existsSync()) {
-    //   return _file!;
-    // }
-    // else {
-    //   new File('$path/counter.txt').create(recursive: true);
-    // }
+    // _file = await _initFile();
+    // return _file!;
   }
 
 // Inititalize file
@@ -36,10 +47,10 @@ class FileHandler {
 
   Future<void> writeMovie(Movie favoriteMovie) async {
     final File fl = await file;
-    if (!fl.existsSync()) {
-      _initFile();
-    }
-
+    List<Movie> oldFavoriteMovies = [];
+    oldFavoriteMovies =
+        await readFavoriteMovies().then((value) => oldFavoriteMovies = value);
+    movieSet = oldFavoriteMovies.toSet();
     movieSet.add(favoriteMovie);
     // Now convert the set to a list as the jsonEncoder cannot encode
     // a set but a list.
@@ -51,9 +62,9 @@ class FileHandler {
   Future<List<Movie>> readFavoriteMovies() async {
     final File fl = await file;
     String content = "";
-    if (fl.existsSync()) {
-      content = await fl.readAsString();
-    }
+    // if (fl.existsSync()) {
+    content = await fl.readAsString();
+    // }
     if (content.isEmpty) {
       return [];
     } else {
