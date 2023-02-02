@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppbarWidget(),
+        appBar: const AppbarWidget(isHomepage: true),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),
           child: Column(
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               // buildMovieListHandler(popularMoviesBloc, false),
-              buildMovieList(context, [])
+              buildMovieList(context)
             ],
           ),
         ),

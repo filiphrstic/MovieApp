@@ -58,5 +58,16 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         emit(const MoviesError("Unable to fetch data. Please try again!"));
       }
     });
+
+    on<GetSearchResultsMovieList>((event, emit) async {
+      try {
+        emit(MovieLoadingState());
+        final response = await tmdbProvider.fetchSearchResults(event.query);
+        emit(PopularMoviesLoadedState(response));
+      } on Error {
+        emit(const MoviesError(
+            "Unable to fetch data. Please check your internet connection!"));
+      }
+    });
   }
 }

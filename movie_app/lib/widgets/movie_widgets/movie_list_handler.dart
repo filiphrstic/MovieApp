@@ -20,10 +20,12 @@ Widget buildMovieListHandler(MovieBloc movieBloc, bool favoriteBool) {
             return buildLoading();
           } else if (state is MovieLoadingState) {
             return buildLoading();
-          } else if (state is PopularMoviesLoadedState && !favoriteBool) {
-            return buildMovieList(
-                context, state.popularMoviesResponse.popularMoviesList!);
-          } else if (state is FavoriteMoviesLoadedState && favoriteBool) {
+          }
+          // else if (state is PopularMoviesLoadedState && !favoriteBool) {
+          //   return buildMovieList(
+          //       context, state.popularMoviesResponse.popularMoviesList!);
+          // }
+          else if (state is FavoriteMoviesLoadedState && favoriteBool) {
             return buildFavoriteMovieList(
                 context, state.favoriteMoviesResponse);
           } else if (state is MoviesError) {

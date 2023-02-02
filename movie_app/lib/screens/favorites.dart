@@ -23,7 +23,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const AppbarWidget(),
+        appBar: const AppbarWidget(isHomepage: false),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),
           child: Center(

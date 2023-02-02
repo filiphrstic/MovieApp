@@ -19,10 +19,22 @@ Widget buildMovieCard(BuildContext context, int index, List<Movie> moviesList) {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(
-                  EnvironmentConfig.IMAGE_BASE_URL +
-                      moviesList[index].posterPath,
-                  scale: 1.65),
+              (moviesList[index].posterPath ==
+                      'https://i.imgur.com/DiIF5t6.jpeg')
+                  ? SizedBox(
+                      width: 100,
+                      height: 150,
+                      child: Image.network(
+                        moviesList[index].posterPath,
+                      ))
+                  : SizedBox(
+                      width: 100,
+                      height: 150,
+                      child: Image.network(
+                        EnvironmentConfig.IMAGE_BASE_URL +
+                            moviesList[index].posterPath,
+                      ),
+                    ),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                 child: Column(

@@ -32,7 +32,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
       create: (context) => addToFavoritesBloc
         ..add(LoadMovieDetailsScreenEvent(widget.chosenMovie.chosenMovie)),
       child: Scaffold(
-        appBar: const AppbarWidget(),
+        appBar: const AppbarWidget(isHomepage: false),
         body: SingleChildScrollView(
           child: Align(
             alignment: Alignment.topCenter,

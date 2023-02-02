@@ -20,11 +20,21 @@ class Movie extends Equatable {
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
       id: json['id'],
-      originalTitle: json['original_title'],
-      overview: json['overview'],
-      posterPath: json['poster_path'],
-      releaseDate: json['release_date'],
-      voteAverage: json['vote_average'].toString(),
+      originalTitle: (json['original_title'] != null)
+          ? json['original_title']
+          : "Title unavailable",
+      overview: (json['overview'] != null)
+          ? json['overview']
+          : "Synopsis unavailable",
+      posterPath: (json['poster_path'] != null)
+          ? json['poster_path']
+          : "https://i.imgur.com/DiIF5t6.jpeg",
+      releaseDate: (json['release_date'] != null)
+          ? json['release_date']
+          : "Release date unavailable",
+      voteAverage: (json['vote_average'] != null)
+          ? json['vote_average'].toString()
+          : "Rating unavailable",
     );
   }
 
