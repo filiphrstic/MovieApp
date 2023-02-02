@@ -1,5 +1,15 @@
 part of 'add_to_favorites_bloc.dart';
 
+/*
+There are four possible states for this scenario:
+1. AddToFavoritesInitial
+2. AddToFavoritesLoaded - This means that the movie check (if the movie has already been added to favorites) 
+has completed and the button is displayed properly. There is a helper bool property "movieAddedToFavorites"
+to easily check later what button to show on movie details page.
+3. MovieAddedToFavorites - This state is active after a user adds a new movie to favorites, it enables the app to change the button accordingly
+4. MovieRemovedFromFavorites - Opposite of 3.
+*/
+
 abstract class AddToFavoritesState extends Equatable {
   const AddToFavoritesState();
 }
@@ -10,31 +20,22 @@ class AddToFavoritesInitial extends AddToFavoritesState {
 }
 
 class AddToFavoritesLoaded extends AddToFavoritesState {
-  final String buttonString;
   final bool movieAddedToFavorites;
-
-  const AddToFavoritesLoaded(this.buttonString, this.movieAddedToFavorites);
+  const AddToFavoritesLoaded(this.movieAddedToFavorites);
 
   @override
   List<Object> get props => [];
 }
 
 class MovieAddedToFavorites extends AddToFavoritesState {
-  final String buttonString;
-  final bool movieAddedToFavorites;
-
-  const MovieAddedToFavorites(this.buttonString, this.movieAddedToFavorites);
+  const MovieAddedToFavorites();
 
   @override
   List<Object> get props => [];
 }
 
 class MovieRemovedFromFavorites extends AddToFavoritesState {
-  final String buttonString;
-  final bool movieAddedToFavorites;
-
-  const MovieRemovedFromFavorites(
-      this.buttonString, this.movieAddedToFavorites);
+  const MovieRemovedFromFavorites();
 
   @override
   List<Object> get props => [];

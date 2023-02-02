@@ -129,31 +129,27 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                     if (state is AddToFavoritesLoaded) {
                       if (state.movieAddedToFavorites) {
                         return removeFromFavoritesButton(
-                            addToFavoritesBloc,
-                            widget.chosenMovie.chosenMovie,
-                            state.movieAddedToFavorites,
-                            state.buttonString);
+                          addToFavoritesBloc,
+                          widget.chosenMovie.chosenMovie,
+                        );
                       } else {
                         return addToFavoritesButton(
-                            addToFavoritesBloc,
-                            widget.chosenMovie.chosenMovie,
-                            state.movieAddedToFavorites,
-                            state.buttonString);
+                          addToFavoritesBloc,
+                          widget.chosenMovie.chosenMovie,
+                        );
                       }
                     }
                     if (state is MovieAddedToFavorites) {
                       return removeFromFavoritesButton(
-                          addToFavoritesBloc,
-                          widget.chosenMovie.chosenMovie,
-                          state.movieAddedToFavorites,
-                          state.buttonString);
+                        addToFavoritesBloc,
+                        widget.chosenMovie.chosenMovie,
+                      );
                     }
                     if (state is MovieRemovedFromFavorites) {
                       return addToFavoritesButton(
-                          addToFavoritesBloc,
-                          widget.chosenMovie.chosenMovie,
-                          state.movieAddedToFavorites,
-                          state.buttonString);
+                        addToFavoritesBloc,
+                        widget.chosenMovie.chosenMovie,
+                      );
                     } else {
                       return Container();
                     }
@@ -184,24 +180,24 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   }
 }
 
-Widget addToFavoritesButton(AddToFavoritesBloc addToFavoritesBloc, Movie movie,
-    bool movieAdded, String buttonString) {
+Widget addToFavoritesButton(
+    AddToFavoritesBloc addToFavoritesBloc, Movie movie) {
   return ElevatedButton.icon(
     onPressed: () async {
-      addToFavoritesBloc.add(AddToFavoritesClickEvent(movie, movieAdded));
+      addToFavoritesBloc.add(AddToFavoritesClickEvent(movie));
     },
     icon: const Icon(Icons.favorite),
-    label: Text(buttonString),
+    label: Text("Add to favorites"),
   );
 }
 
-Widget removeFromFavoritesButton(AddToFavoritesBloc addToFavoritesBloc,
-    Movie movie, bool movieAdded, String buttonString) {
+Widget removeFromFavoritesButton(
+    AddToFavoritesBloc addToFavoritesBloc, Movie movie) {
   return ElevatedButton.icon(
     onPressed: () async {
-      addToFavoritesBloc.add(RemoveFromFavoritesClickEvent(movie, movieAdded));
+      addToFavoritesBloc.add(RemoveFromFavoritesClickEvent(movie));
     },
     icon: const Icon(Icons.favorite),
-    label: Text(buttonString),
+    label: Text("Remove from favorites"),
   );
 }
