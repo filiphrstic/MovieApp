@@ -27,6 +27,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
       );
     } else {
       return AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         title: const Align(
           alignment: Alignment.center,

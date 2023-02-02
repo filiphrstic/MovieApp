@@ -49,40 +49,53 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     children: [
-                      Image.network(EnvironmentConfig.IMAGE_BASE_URL +
-                          widget.chosenMovie.chosenMovie.posterPath),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: Image.network(EnvironmentConfig.IMAGE_BASE_URL +
+                            widget.chosenMovie.chosenMovie.posterPath),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Release date',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            Text(widget.chosenMovie.chosenMovie.releaseDate),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text('Rating',
-                                  style: Theme.of(context).textTheme.bodyText1),
-                            ),
-                            Text(widget.chosenMovie.chosenMovie.voteAverage),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text('Synopsis',
-                                  style: Theme.of(context).textTheme.bodyText1),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 2 - 40,
-                              height: MediaQuery.of(context).size.height / 4,
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Text(
-                                  widget.chosenMovie.chosenMovie.overview,
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height / 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Release date',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              Text(widget.chosenMovie.chosenMovie.releaseDate),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Text('Rating',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                              ),
+                              Text(widget.chosenMovie.chosenMovie.voteAverage),
+                              const Spacer(),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0),
+                                child: Text('Synopsis',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1),
+                              ),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 40,
+                                height: 150,
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Text(
+                                    widget.chosenMovie.chosenMovie.overview,
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       )
                     ],

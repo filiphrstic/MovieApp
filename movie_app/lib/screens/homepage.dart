@@ -1,10 +1,8 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_list_builder.dart';
-import 'package:movie_app/widgets/movie_widgets/movie_list_handler.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
