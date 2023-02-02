@@ -6,9 +6,7 @@ abstract class AddToFavoritesEvent extends Equatable {
 
 class LoadMovieDetailsScreenEvent extends AddToFavoritesEvent {
   final Movie movie;
-
   const LoadMovieDetailsScreenEvent(this.movie);
-
   @override
   List<Object> get props => [movie];
 }
@@ -16,9 +14,7 @@ class LoadMovieDetailsScreenEvent extends AddToFavoritesEvent {
 class AddToFavoritesClickEvent extends AddToFavoritesEvent {
   final Movie movie;
   final bool movieAlreadyAdded;
-
   const AddToFavoritesClickEvent(this.movie, this.movieAlreadyAdded);
-
   @override
   List<Object> get props => [movie];
 }

@@ -1,9 +1,9 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
-import 'package:movie_app/blocs/popular_movies_bloc/popular_movies_bloc.dart';
+import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
-import 'package:movie_app/widgets/popular_movies/popular_movies_list.dart';
+import 'package:movie_app/widgets/movie_widgets/movie_list_handler.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -13,7 +13,7 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  final PopularMoviesBloc popularMoviesBloc = PopularMoviesBloc();
+  final MovieBloc popularMoviesBloc = MovieBloc();
   @override
   void initState() {
     popularMoviesBloc.add(GetFavoriteMoviesList());
@@ -40,7 +40,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     ),
                   ),
                 ),
-                buildPopularMoviesList(popularMoviesBloc, true),
+                buildMovieListHandler(popularMoviesBloc, true),
               ],
             ),
           ),

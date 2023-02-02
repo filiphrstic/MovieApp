@@ -5,38 +5,37 @@ import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/providers/tmdb_provider.dart';
 
-part 'popular_movies_event.dart';
-part 'popular_movies_state.dart';
+part 'movie_event.dart';
+part 'movie_state.dart';
 
-class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
-  PopularMoviesBloc() : super(PopularMoviesInitial()) {
+class MovieBloc extends Bloc<MovieEvent, MovieState> {
+  MovieBloc() : super(MovieInitialState()) {
     final TmdbProvider tmdbProvider = TmdbProvider();
 
     on<GetPopularMoviesList>((event, emit) async {
       try {
-        emit(PopularMoviesLoading());
+        emit(MovieLoadingState());
         final response = await tmdbProvider.fetchPopularMovies();
-        emit(PopularMoviesLoaded(response));
+        emit(PopularMoviesLoadedState(response));
         if (response.error != null) {
-          emit(PopularMoviesError(response.error));
+          emit(MoviesError(response.error));
         }
       } on NetworkError {
-        emit(const PopularMoviesError(
+        emit(const MoviesError(
             "Unable to fetch data. Please check your internet connection!"));
       }
     });
 
     on<GetFavoriteMoviesList>((event, emit) async {
       try {
-        emit(PopularMoviesLoading());
+        emit(MovieLoadingState());
         List<Movie> response = [];
         response = await FileHandler.instance
             .readFavoriteMovies()
             .then((value) => response = value);
-        emit(FavoriteMoviesLoaded(response));
-      } on NetworkError {
-        emit(const PopularMoviesError(
-            "Unable to fetch data. Please check your internet connection!"));
+        emit(FavoriteMoviesLoadedState(response));
+      } on Error {
+        emit(const MoviesError("Unable to fetch data. Please try again!"));
       }
     });
   }
