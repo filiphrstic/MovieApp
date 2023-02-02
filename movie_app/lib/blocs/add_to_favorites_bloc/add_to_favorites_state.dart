@@ -21,9 +21,20 @@ class AddToFavoritesLoaded extends AddToFavoritesState {
 
 class MovieAddedToFavorites extends AddToFavoritesState {
   final String buttonString;
-  final bool movieAdded;
+  final bool movieAddedToFavorites;
 
-  const MovieAddedToFavorites(this.buttonString, this.movieAdded);
+  const MovieAddedToFavorites(this.buttonString, this.movieAddedToFavorites);
+
+  @override
+  List<Object> get props => [];
+}
+
+class MovieRemovedFromFavorites extends AddToFavoritesState {
+  final String buttonString;
+  final bool movieAddedToFavorites;
+
+  const MovieRemovedFromFavorites(
+      this.buttonString, this.movieAddedToFavorites);
 
   @override
   List<Object> get props => [];

@@ -30,5 +30,15 @@ class AddToFavoritesBloc
         emit(const MovieAddedToFavorites('Add to favorites', false));
       }
     });
+
+    on<RemoveFromFavoritesClickEvent>((event, emit) async {
+      if (!event.movieAlreadyAdded) {
+        await FileHandler.instance.writeMovie(event.movie);
+        emit(const MovieAddedToFavorites('Remove from favorites', true));
+      } else if (event.movieAlreadyAdded) {
+        await FileHandler.instance.deleteFavoriteMovie(event.movie);
+        emit(const MovieRemovedFromFavorites('Add to favorites', false));
+      }
+    });
   }
 }

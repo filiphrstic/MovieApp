@@ -18,3 +18,11 @@ class AddToFavoritesClickEvent extends AddToFavoritesEvent {
   @override
   List<Object> get props => [movie];
 }
+
+class RemoveFromFavoritesClickEvent extends AddToFavoritesEvent {
+  final Movie movie;
+  final bool movieAlreadyAdded;
+  const RemoveFromFavoritesClickEvent(this.movie, this.movieAlreadyAdded);
+  @override
+  List<Object> get props => [movie];
+}
