@@ -9,4 +9,12 @@ abstract class MovieEvent extends Equatable {
 
 class GetPopularMoviesList extends MovieEvent {}
 
+class GetMorePopularMoviesList extends MovieEvent {
+  final List<Movie> previouslyFetchedMovies;
+  final int previousPage;
+
+  const GetMorePopularMoviesList(
+      this.previouslyFetchedMovies, this.previousPage);
+}
+
 class GetFavoriteMoviesList extends MovieEvent {}

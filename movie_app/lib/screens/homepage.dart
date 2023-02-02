@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
+import 'package:movie_app/widgets/movie_widgets/movie_list_builder.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_list_handler.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,11 +14,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final MovieBloc popularMoviesBloc = MovieBloc();
+  // final MovieBloc popularMoviesBloc = MovieBloc();
 
   @override
   void initState() {
-    popularMoviesBloc.add(GetPopularMoviesList());
+    // popularMoviesBloc.add(GetPopularMoviesList());
     super.initState();
   }
 
@@ -39,7 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              buildMovieListHandler(popularMoviesBloc, false),
+              // buildMovieListHandler(popularMoviesBloc, false),
+              buildMovieList(context, [])
             ],
           ),
         ),

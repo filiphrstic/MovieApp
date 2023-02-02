@@ -24,7 +24,8 @@ Widget buildMovieListHandler(MovieBloc movieBloc, bool favoriteBool) {
             return buildMovieList(
                 context, state.popularMoviesResponse.popularMoviesList!);
           } else if (state is FavoriteMoviesLoadedState && favoriteBool) {
-            return buildMovieList(context, state.favoriteMoviesResponse);
+            return buildFavoriteMovieList(
+                context, state.favoriteMoviesResponse);
           } else if (state is MoviesError) {
             return Container();
           } else {

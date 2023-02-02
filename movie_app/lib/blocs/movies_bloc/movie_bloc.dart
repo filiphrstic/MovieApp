@@ -15,7 +15,27 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<GetPopularMoviesList>((event, emit) async {
       try {
         emit(MovieLoadingState());
-        final response = await tmdbProvider.fetchPopularMovies();
+        final response = await tmdbProvider.fetchPopularMovies(1);
+        emit(PopularMoviesLoadedState(response));
+        if (response.error != null) {
+          emit(MoviesError(response.error));
+        }
+      } on NetworkError {
+        emit(const MoviesError(
+            "Unable to fetch data. Please check your internet connection!"));
+      }
+    });
+
+    on<GetMorePopularMoviesList>((event, emit) async {
+      try {
+        emit(MovieLoadingState());
+        final response =
+            await tmdbProvider.fetchPopularMovies(event.previousPage + 1);
+        List<Movie> previouslyFetchedMovies = event.previouslyFetchedMovies;
+        List<Movie> newlyFetchedMovies = response.popularMoviesList!;
+        previouslyFetchedMovies.addAll(newlyFetchedMovies);
+        response.popularMoviesList = previouslyFetchedMovies;
+        // event.previouslyFetchedMovies.addAll(response..popularMoviesList!);
         emit(PopularMoviesLoadedState(response));
         if (response.error != null) {
           emit(MoviesError(response.error));

@@ -8,9 +8,9 @@ class TmdbProvider {
   final String urlPopularMovies =
       '${EnvironmentConfig.BASE_URL}movie/popular?api_key=${EnvironmentConfig.API_KEY}';
 
-  Future<PopularMoviesResponse> fetchPopularMovies() async {
+  Future<PopularMoviesResponse> fetchPopularMovies(int page) async {
     try {
-      Response response = await dio.get(urlPopularMovies);
+      Response response = await dio.get('$urlPopularMovies&page=$page');
       // print(response.data.toString());
       return PopularMoviesResponse.fromJson(response.data);
     } catch (error) {
