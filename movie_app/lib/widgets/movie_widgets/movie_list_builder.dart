@@ -85,17 +85,24 @@ Widget buildSearchResultsMovieList(
             return buildLoading();
           }
           if (state is MovieLoadedState) {
-            return Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: state.popularMoviesResponse.moviesList!.length,
-                itemBuilder: ((context, index) {
-                  final Movie searchResultMovie =
-                      state.popularMoviesResponse.moviesList![index];
-                  return buildMovieCard(context, index, searchResultMovie);
-                }),
-              ),
-            );
+            if (state.popularMoviesResponse.moviesList == null) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Text('No results found'),
+              );
+            } else {
+              return Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.popularMoviesResponse.moviesList!.length,
+                  itemBuilder: ((context, index) {
+                    final Movie searchResultMovie =
+                        state.popularMoviesResponse.moviesList![index];
+                    return buildMovieCard(context, index, searchResultMovie);
+                  }),
+                ),
+              );
+            }
           }
           if (state is MoviesError) {
             return Text(state.message.toString());
