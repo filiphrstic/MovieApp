@@ -1,20 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:movie_app/classes/cast_members_response.dart';
-import 'package:movie_app/classes/popular_movies_response.dart';
+import 'package:movie_app/classes/movie_response.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 
 class TmdbProvider {
   final Dio dio = Dio();
-  final String urlPopularMovies =
-      '${EnvironmentConfig.BASE_URL}movie/popular?api_key=${EnvironmentConfig.API_KEY}';
 
-  Future<PopularMoviesResponse> fetchPopularMovies(int page) async {
+  Future<MovieResponse> fetchPopularMovies(int page) async {
+    final String urlPopularMovies =
+        '${EnvironmentConfig.BASE_URL}movie/popular?api_key=${EnvironmentConfig.API_KEY}&page=$page';
     try {
-      Response response = await dio.get('$urlPopularMovies&page=$page');
-      return PopularMoviesResponse.fromJson(response.data);
+      Response response = await dio.get(urlPopularMovies);
+      return MovieResponse.fromJson(response.data);
     } catch (error) {
-      return PopularMoviesResponse.withError(
-          "Data not found / Connection issue");
+      return MovieResponse.withError("Data not found / Connection issue");
     }
   }
 
@@ -29,17 +28,14 @@ class TmdbProvider {
     }
   }
 
-  Future<PopularMoviesResponse> fetchSearchResults(String query) async {
+  Future<MovieResponse> fetchSearchResults(String query) async {
     final String urlSearch =
         '${EnvironmentConfig.BASE_URL}search/movie?api_key=${EnvironmentConfig.API_KEY}&query=$query';
     try {
       Response response = await dio.get(urlSearch);
-      // print(response.data.toString());
-      return PopularMoviesResponse.fromJson(response.data);
+      return MovieResponse.fromJson(response.data);
     } catch (error) {
-      // print("Exception occured: $error stackTrace: $stacktrace");
-      return PopularMoviesResponse.withError(
-          "Data not found / Connection issue");
+      return MovieResponse.withError("Data not found / Connection issue");
     }
   }
 }

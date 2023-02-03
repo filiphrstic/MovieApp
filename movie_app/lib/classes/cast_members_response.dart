@@ -1,5 +1,7 @@
 import 'package:movie_app/classes/cast_member.dart';
 
+//Stores data from API response, creates instances of CastMember and adds them to a list
+
 class CastMembersResponse {
   int? id;
   List<CastMember>? castList;

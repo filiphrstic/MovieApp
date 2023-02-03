@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
 
+//This class containes all information needed about a movie
+//Data is extracted from JSON response
+//Method "toJson" is needed when saving a movie to favorites
+
 class Movie extends Equatable {
   final int id;
   final String originalTitle;

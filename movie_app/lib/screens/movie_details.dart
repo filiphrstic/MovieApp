@@ -187,7 +187,7 @@ Widget addToFavoritesButton(
       addToFavoritesBloc.add(AddToFavoritesClickEvent(movie));
     },
     icon: const Icon(Icons.favorite),
-    label: Text("Add to favorites"),
+    label: const Text("Add to favorites"),
   );
 }
 
@@ -198,6 +198,6 @@ Widget removeFromFavoritesButton(
       addToFavoritesBloc.add(RemoveFromFavoritesClickEvent(movie));
     },
     icon: const Icon(Icons.favorite),
-    label: Text("Remove from favorites"),
+    label: const Text("Remove from favorites"),
   );
 }

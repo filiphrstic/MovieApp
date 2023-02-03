@@ -1,3 +1,5 @@
+//Class to store information about cast member. Data is extracted from a map (json response)
+
 class CastMember {
   final int id;
   final String name;

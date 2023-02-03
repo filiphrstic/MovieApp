@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/classes/popular_movies_response.dart';
+import 'package:movie_app/classes/movie_response.dart';
 import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/providers/tmdb_provider.dart';
@@ -12,11 +12,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc() : super(MovieInitialState()) {
     final TmdbProvider tmdbProvider = TmdbProvider();
 
+    //Fetching list of popular movies from API and sending back the response
     on<GetPopularMoviesList>((event, emit) async {
       try {
         emit(MovieLoadingState());
         final response = await tmdbProvider.fetchPopularMovies(1);
-        emit(PopularMoviesLoadedState(response));
+        emit(MovieLoadedState(response));
         if (response.error != null) {
           emit(MoviesError(response.error));
         }
@@ -26,17 +27,21 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       }
     });
 
+    /*
+    Fetches next page of popular movies when user scrolls to the bottom of the list.
+    After receiving the response, it rearanges list of all popular movies so it 
+    is being displayed in the right order 
+    */
     on<GetMorePopularMoviesList>((event, emit) async {
       try {
         emit(MovieLoadingState());
         final response =
             await tmdbProvider.fetchPopularMovies(event.previousPage + 1);
         List<Movie> previouslyFetchedMovies = event.previouslyFetchedMovies;
-        List<Movie> newlyFetchedMovies = response.popularMoviesList!;
+        List<Movie> newlyFetchedMovies = response.moviesList!;
         previouslyFetchedMovies.addAll(newlyFetchedMovies);
-        response.popularMoviesList = previouslyFetchedMovies;
-        // event.previouslyFetchedMovies.addAll(response..popularMoviesList!);
-        emit(PopularMoviesLoadedState(response));
+        response.moviesList = previouslyFetchedMovies;
+        emit(MovieLoadedState(response));
         if (response.error != null) {
           emit(MoviesError(response.error));
         }
@@ -46,6 +51,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       }
     });
 
+    //Fetches list of popular movies from local storage using FileHandler
     on<GetFavoriteMoviesList>((event, emit) async {
       try {
         emit(MovieLoadingState());
@@ -59,11 +65,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       }
     });
 
+    //Fetches list of movies that match users search input using appropriate method from TmbdProvider
     on<GetSearchResultsMovieList>((event, emit) async {
       try {
         emit(MovieLoadingState());
         final response = await tmdbProvider.fetchSearchResults(event.query);
-        emit(PopularMoviesLoadedState(response));
+        emit(MovieLoadedState(response));
       } on Error {
         emit(const MoviesError(
             "Unable to fetch data. Please check your internet connection!"));

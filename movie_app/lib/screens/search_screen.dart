@@ -35,46 +35,47 @@ class _SearchPageState extends State<SearchPage> {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               child: Scaffold(
-                  appBar: const AppbarWidget(isHomepage: false),
-                  body: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              'Search movies',
-                              style: Theme.of(context).textTheme.titleLarge,
+                appBar: const AppbarWidget(isHomepage: false),
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            'Search movies',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: TextField(
+                          controller: textController,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            suffixIcon: TextButton.icon(
+                              icon: const Icon(Icons.search),
+                              onPressed: () {
+                                WidgetsBinding
+                                    .instance.focusManager.primaryFocus
+                                    ?.unfocus();
+                                searchMovieBloc.add(GetSearchResultsMovieList(
+                                    textController.text));
+                              },
+                              label: const Text('Search'),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          child: TextField(
-                            controller: textController,
-                            decoration: InputDecoration(
-                                border: const OutlineInputBorder(),
-                                suffixIcon: TextButton.icon(
-                                  icon: const Icon(Icons.search),
-                                  onPressed: () {
-                                    WidgetsBinding
-                                        .instance.focusManager.primaryFocus
-                                        ?.unfocus();
-                                    searchMovieBloc.add(
-                                        GetSearchResultsMovieList(
-                                            textController.text));
-                                  },
-                                  label: const Text('Search'),
-                                )),
-                          ),
-                        ),
-                        buildSearchResultsMovieList(context, searchMovieBloc)
-                      ],
-                    ),
+                      ),
+                      buildSearchResultsMovieList(context, searchMovieBloc)
+                    ],
                   ),
-                  bottomNavigationBar: const BottomNavbar()),
+                ),
+                bottomNavigationBar: const BottomNavbar(),
+              ),
             );
           },
         ),

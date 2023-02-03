@@ -4,6 +4,8 @@ import 'package:equatable/equatable.dart';
 
 part 'navigation_state.dart';
 
+//This class is responsible for bottom navigation bar updates
+
 class NavigationCubit extends Cubit<NavigationState> {
   NavigationCubit()
       : super(const NavigationState(BottomNavbarItem.homepage, 0));

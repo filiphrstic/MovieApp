@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/classes/cast_member.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
+import 'package:movie_app/widgets/loading/loading_widgets.dart';
 
 Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
   return Container(
@@ -17,6 +18,10 @@ Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
                     child: Image.network(
                       EnvironmentConfig.IMAGE_BASE_URL +
                           castMember.profilePath!,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return buildLoadingProgressIndicator(loadingProgress);
+                      },
                     ),
                   )
                 : SizedBox(

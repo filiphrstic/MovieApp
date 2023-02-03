@@ -1,32 +1,35 @@
 import 'package:movie_app/classes/movie.dart';
 
-class PopularMoviesResponse {
+//Class to store information from API response
+//It also creates instances of Movie class and stores them to a list
+
+class MovieResponse {
   int? currentPage;
-  List<Movie>? popularMoviesList;
+  List<Movie>? moviesList;
   int? totalPages;
   int? totalResults;
   String? error;
 
-  PopularMoviesResponse({
+  MovieResponse({
     required this.currentPage,
-    required this.popularMoviesList,
+    required this.moviesList,
     required this.totalPages,
     required this.totalResults,
   });
 
-  PopularMoviesResponse.fromJson(Map<String, dynamic> json) {
+  MovieResponse.fromJson(Map<String, dynamic> json) {
     currentPage = json['page'];
     if (json['results'] != null) {
-      popularMoviesList = [];
+      moviesList = [];
       json['results'].forEach((popularMovie) {
-        popularMoviesList!.add(Movie.fromJson(popularMovie));
+        moviesList!.add(Movie.fromJson(popularMovie));
       });
     }
     totalPages = json['total_pages'];
     totalResults = json['total_results'];
   }
 
-  PopularMoviesResponse.withError(String errorMessage) {
+  MovieResponse.withError(String errorMessage) {
     error = errorMessage;
   }
 }

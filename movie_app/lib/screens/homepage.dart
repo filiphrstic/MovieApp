@@ -12,11 +12,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // final MovieBloc popularMoviesBloc = MovieBloc();
-
   @override
   void initState() {
-    // popularMoviesBloc.add(GetPopularMoviesList());
     super.initState();
   }
 
@@ -38,7 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              // buildMovieListHandler(popularMoviesBloc, false),
               buildMovieList(context)
             ],
           ),

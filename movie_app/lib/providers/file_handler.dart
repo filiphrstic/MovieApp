@@ -10,8 +10,10 @@ class FileHandler {
 
   static File? _file;
   static const _fileName = 'favorites.json';
+  static Set<Movie> movieSet = {};
 
-// Get the data file
+  // Gets the "favorites.json" file from local storage
+  // If the file doesn't exist, it creates it first
   Future<File> get file async {
     if (_file != null) {
       return _file!;
@@ -28,15 +30,16 @@ class FileHandler {
     }
   }
 
-// Inititalize file
+  // Creates "favorites.json" file
   Future<File> _initFile() async {
     final directory = await getApplicationDocumentsDirectory();
     final path = directory.path;
     return File('$path/$_fileName').create(recursive: true);
   }
 
-  static Set<Movie> movieSet = {};
-
+  // This method reads favorite movies from JSON file
+  // and then appends new movie to the end of the list
+  // After that it writes that updated list back to the file
   Future<void> writeMovie(Movie favoriteMovie) async {
     final File fl = await file;
     List<Movie> oldFavoriteMovies = [];
@@ -44,13 +47,11 @@ class FileHandler {
         await readFavoriteMovies().then((value) => oldFavoriteMovies = value);
     movieSet = oldFavoriteMovies.toSet();
     movieSet.add(favoriteMovie);
-    // Now convert the set to a list as the jsonEncoder cannot encode
-    // a set but a list.
     final movieListMap = movieSet.map((e) => e.toJson()).toList();
-
     await fl.writeAsString(jsonEncode(movieListMap));
   }
 
+  // Reads and returns list of movies from JSON file
   Future<List<Movie>> readFavoriteMovies() async {
     final File fl = await file;
     String content = "";
@@ -68,6 +69,7 @@ class FileHandler {
     }
   }
 
+  // Deletes a movie from JSON file
   Future<void> deleteFavoriteMovie(Movie favoriteMovie) async {
     final File fl = await file;
     List<Movie> oldFavoriteMovies = [];

@@ -3,14 +3,15 @@ import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/navigation/routes.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
+import 'package:movie_app/widgets/loading/loading_widgets.dart';
 
-Widget buildMovieCard(BuildContext context, int index, List<Movie> moviesList) {
+Widget buildMovieCard(BuildContext context, int index, Movie movie) {
   return Container(
     margin: const EdgeInsets.all(10.0),
     child: Card(
       child: InkWell(
         onTap: () {
-          ChosenMovie chosenMovie = ChosenMovie(moviesList[index]);
+          ChosenMovie chosenMovie = ChosenMovie(movie);
           Navigator.pushNamed(context, movieDetailsScreenRoute,
               arguments: chosenMovie);
         },
@@ -19,20 +20,22 @@ Widget buildMovieCard(BuildContext context, int index, List<Movie> moviesList) {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (moviesList[index].posterPath ==
-                      'https://i.imgur.com/DiIF5t6.jpeg')
+              (movie.posterPath == 'https://i.imgur.com/DiIF5t6.jpeg')
                   ? SizedBox(
                       width: 100,
                       height: 150,
                       child: Image.network(
-                        moviesList[index].posterPath,
+                        movie.posterPath,
                       ))
                   : SizedBox(
                       width: 100,
                       height: 150,
                       child: Image.network(
-                        EnvironmentConfig.IMAGE_BASE_URL +
-                            moviesList[index].posterPath,
+                        EnvironmentConfig.IMAGE_BASE_URL + movie.posterPath,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return buildLoadingProgressIndicator(loadingProgress);
+                        },
                       ),
                     ),
               Padding(
@@ -43,7 +46,7 @@ Widget buildMovieCard(BuildContext context, int index, List<Movie> moviesList) {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 2,
                       child: Text(
-                        moviesList[index].originalTitle,
+                        movie.originalTitle,
                         style: Theme.of(context).textTheme.bodyLarge,
                         overflow: TextOverflow.clip,
                         maxLines: 5,
@@ -51,7 +54,7 @@ Widget buildMovieCard(BuildContext context, int index, List<Movie> moviesList) {
                       ),
                     ),
                     Text(
-                      moviesList[index].releaseDate,
+                      movie.releaseDate,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
