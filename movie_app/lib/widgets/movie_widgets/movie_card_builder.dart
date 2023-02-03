@@ -3,7 +3,6 @@ import 'package:movie_app/classes/movie.dart';
 import 'package:movie_app/navigation/routes.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
-import 'package:movie_app/widgets/loading/loading_widgets.dart';
 
 Widget buildMovieCard(BuildContext context, int index, Movie movie) {
   return Container(
@@ -20,22 +19,25 @@ Widget buildMovieCard(BuildContext context, int index, Movie movie) {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              (movie.posterPath == 'https://i.imgur.com/DiIF5t6.jpeg')
+              (movie.posterPath.isEmpty)
                   ? SizedBox(
                       width: 100,
                       height: 150,
-                      child: Image.network(
-                        movie.posterPath,
+                      child: Image.asset(
+                        'lib/assets/images/unavailable-image.jpg',
                       ))
                   : SizedBox(
                       width: 100,
                       height: 150,
-                      child: Image.network(
-                        EnvironmentConfig.IMAGE_BASE_URL + movie.posterPath,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return buildLoadingProgressIndicator(loadingProgress);
+                      child: FadeInImage(
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                              'lib/assets/images/unavailable-image.jpg');
                         },
+                        placeholder:
+                            const AssetImage('lib/assets/images/loading.gif'),
+                        image: NetworkImage(EnvironmentConfig.IMAGE_BASE_URL +
+                            movie.posterPath),
                       ),
                     ),
               Padding(

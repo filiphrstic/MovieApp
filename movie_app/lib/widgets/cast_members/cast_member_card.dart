@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/classes/cast_member.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
-import 'package:movie_app/widgets/loading/loading_widgets.dart';
 
 Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
   return Container(
@@ -12,23 +11,25 @@ Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            castMember.profilePath != null
+            castMember.profilePath!.isEmpty
                 ? SizedBox(
                     width: 75,
-                    child: Image.network(
-                      EnvironmentConfig.IMAGE_BASE_URL +
-                          castMember.profilePath!,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return buildLoadingProgressIndicator(loadingProgress);
-                      },
-                    ),
-                  )
+                    child: Image.asset(
+                      'lib/assets/images/unavailable-image.jpg',
+                    ))
                 : SizedBox(
                     width: 75,
-                    child: Image.network(
-                      EnvironmentConfig.NO_IMAGE_PATH,
-                    )),
+                    child: FadeInImage(
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                            'lib/assets/images/unavailable-image.jpg');
+                      },
+                      placeholder:
+                          const AssetImage('lib/assets/images/loading.gif'),
+                      image: NetworkImage(EnvironmentConfig.IMAGE_BASE_URL +
+                          castMember.profilePath!),
+                    ),
+                  ),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 20.0),
               child: Column(

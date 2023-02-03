@@ -30,9 +30,7 @@ class Movie extends Equatable {
       overview: (json['overview'] != null)
           ? json['overview']
           : "Synopsis unavailable",
-      posterPath: (json['poster_path'] != null)
-          ? json['poster_path']
-          : "https://i.imgur.com/DiIF5t6.jpeg",
+      posterPath: (json['poster_path'] != null) ? json['poster_path'] : "",
       releaseDate: (json['release_date'] != null)
           ? json['release_date']
           : "Release date unavailable",

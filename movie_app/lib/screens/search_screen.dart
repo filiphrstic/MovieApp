@@ -59,11 +59,20 @@ class _SearchPageState extends State<SearchPage> {
                             suffixIcon: TextButton.icon(
                               icon: const Icon(Icons.search),
                               onPressed: () {
-                                WidgetsBinding
-                                    .instance.focusManager.primaryFocus
-                                    ?.unfocus();
-                                searchMovieBloc.add(GetSearchResultsMovieList(
-                                    textController.text));
+                                if (textController.text.isEmpty) {
+                                  const snackbarMessage = SnackBar(
+                                    content:
+                                        Text('Movie title must be provided'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackbarMessage);
+                                } else {
+                                  WidgetsBinding
+                                      .instance.focusManager.primaryFocus
+                                      ?.unfocus();
+                                  searchMovieBloc.add(GetSearchResultsMovieList(
+                                      textController.text));
+                                }
                               },
                               label: const Text('Search'),
                             ),

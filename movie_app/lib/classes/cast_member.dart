@@ -18,10 +18,14 @@ class CastMember {
   factory CastMember.fromJson(Map<String, dynamic> json) {
     return CastMember(
       id: json['id'],
-      name: json['name'],
-      profilePath: json['profile_path'],
-      character: json['character'],
-      department: json['known_for_department'],
+      name: (json['name'] != null) ? json['name'] : "Name unavailable",
+      profilePath: (json['profile_path'] != null) ? json['profile_path'] : "",
+      character: (json['character'] != null)
+          ? json['name']
+          : "Character name unavailable",
+      department: (json['known_for_department'] != null)
+          ? json['known_for_department']
+          : "Department unavailable",
     );
   }
 }

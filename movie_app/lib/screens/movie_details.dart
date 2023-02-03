@@ -50,11 +50,18 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Row(
                     children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 3,
-                        child: Image.network(EnvironmentConfig.IMAGE_BASE_URL +
-                            widget.chosenMovie.chosenMovie.posterPath),
-                      ),
+                      (widget.chosenMovie.chosenMovie.posterPath.isEmpty)
+                          ? SizedBox(
+                              height: MediaQuery.of(context).size.width / 3,
+                              child: Image.asset(
+                                  'lib/assets/images/unavailable-image.jpg'),
+                            )
+                          : SizedBox(
+                              height: MediaQuery.of(context).size.height / 3,
+                              child: Image.network(EnvironmentConfig
+                                      .IMAGE_BASE_URL +
+                                  widget.chosenMovie.chosenMovie.posterPath),
+                            ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: SizedBox(

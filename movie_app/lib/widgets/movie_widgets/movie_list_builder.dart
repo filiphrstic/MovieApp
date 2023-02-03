@@ -18,13 +18,7 @@ Widget buildMovieList(BuildContext context) {
   return BlocProvider(
     create: (context) => movieBloc,
     child: BlocListener<MovieBloc, MovieState>(
-      listener: (context, state) {
-        if (state is MovieLoadedState) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Movies loaded'),
-          ));
-        }
-      },
+      listener: (context, state) {},
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
           if (state is MovieInitialState) {
@@ -78,13 +72,7 @@ Widget buildSearchResultsMovieList(
   return BlocProvider(
     create: (context) => searchResultsMovieBloc,
     child: BlocListener<MovieBloc, MovieState>(
-      listener: (context, state) {
-        if (state is MovieLoadedState) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Search results loaded'),
-          ));
-        }
-      },
+      listener: (context, state) {},
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
           if (state is MovieInitialState) {
