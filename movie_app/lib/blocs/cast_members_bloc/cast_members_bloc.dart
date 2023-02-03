@@ -6,6 +6,8 @@ import 'package:movie_app/providers/tmdb_provider.dart';
 part 'cast_members_event.dart';
 part 'cast_members_state.dart';
 
+//Fetching cast members from API and emiting event with response after it's loaded
+
 class CastMembersBloc extends Bloc<CastMembersEvent, CastMembersState> {
   CastMembersBloc() : super(const CastMembersInitial()) {
     final TmdbProvider tmdbProvider = TmdbProvider();

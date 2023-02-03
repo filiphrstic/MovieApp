@@ -1,5 +1,16 @@
 part of 'cast_members_bloc.dart';
 
+/*
+CastMembersLoaded state is active after the cast fetching 
+has been completed, and it carries a response from API.
+
+CastMembersLoading state enables loading indicator to be 
+shown until the data is fetched.
+
+CastMembersError state becomes active if an error occurs
+whilst fetching the data from API.
+*/
+
 abstract class CastMembersState extends Equatable {
   const CastMembersState();
 
