@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/classes/cast_members_response.dart';
+import 'package:movie_app/models/cast_members/cast_members_response.dart';
 import 'package:movie_app/providers/tmdb_provider.dart';
 
 part 'cast_members_event.dart';

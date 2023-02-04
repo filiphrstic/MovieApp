@@ -1,4 +1,4 @@
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 
 //Class to store information from API response
 //It also creates instances of Movie class and stores them to a list

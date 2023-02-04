@@ -21,7 +21,7 @@ class CastMember {
       name: (json['name'] != null) ? json['name'] : "Name unavailable",
       profilePath: (json['profile_path'] != null) ? json['profile_path'] : "",
       character: (json['character'] != null)
-          ? json['name']
+          ? json['character']
           : "Character name unavailable",
       department: (json['known_for_department'] != null)
           ? json['known_for_department']

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/add_to_favorites_bloc/add_to_favorites_bloc.dart';
 import 'package:movie_app/blocs/cast_members_bloc/cast_members_bloc.dart';
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';

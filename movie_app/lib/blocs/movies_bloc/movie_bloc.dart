@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/classes/movie_response.dart';
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie_response.dart';
+import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/providers/file_handler.dart';
 import 'package:movie_app/providers/tmdb_provider.dart';
 

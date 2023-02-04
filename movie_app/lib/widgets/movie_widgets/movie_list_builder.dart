@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/widgets/loading/loading_widgets.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_card_builder.dart';
 

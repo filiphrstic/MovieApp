@@ -1,4 +1,4 @@
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 
 //This class is used as a screen argument to pass a specific
 //movie from one screen to another (i.e. from Homepage to Movie details)

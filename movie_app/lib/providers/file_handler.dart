@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FileHandler {

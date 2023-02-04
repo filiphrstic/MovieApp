@@ -1,4 +1,4 @@
-import 'package:movie_app/classes/cast_member.dart';
+import 'package:movie_app/models/cast_members/cast_member.dart';
 
 //Stores data from API response, creates instances of CastMember and adds them to a list
 

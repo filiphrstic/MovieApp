@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/classes/cast_member.dart';
+import 'package:movie_app/models/cast_members/cast_member.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 
 Widget buildCastMemberCard(BuildContext context, CastMember castMember) {

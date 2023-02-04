@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/classes/movie.dart';
+import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/navigation/routes.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
