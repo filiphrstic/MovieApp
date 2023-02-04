@@ -15,7 +15,6 @@ this state enbables to display an error message
 
 abstract class MovieState extends Equatable {
   const MovieState();
-
   @override
   List<Object?> get props => [];
 }
@@ -27,6 +26,9 @@ class MovieLoadingState extends MovieState {}
 class MovieLoadedState extends MovieState {
   final MovieResponse popularMoviesResponse;
   const MovieLoadedState(this.popularMoviesResponse);
+
+  @override
+  List<Object?> get props => [popularMoviesResponse];
 }
 
 class FavoriteMoviesLoadedState extends MovieState {

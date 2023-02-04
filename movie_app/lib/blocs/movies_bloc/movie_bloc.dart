@@ -34,7 +34,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     */
     on<GetMorePopularMoviesList>((event, emit) async {
       try {
-        emit(MovieLoadingState());
+        // emit(MovieLoadingState());
         final response =
             await tmdbProvider.fetchPopularMovies(event.previousPage + 1);
         List<Movie> previouslyFetchedMovies = event.previouslyFetchedMovies;
