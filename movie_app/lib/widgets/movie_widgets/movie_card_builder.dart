@@ -5,9 +5,11 @@ import 'package:movie_app/screen_arguments/chosen_movie.dart';
 import 'package:movie_app/utilities/environment_variables.dart';
 
 Widget buildMovieCard(BuildContext context, int index, Movie movie) {
+  final screenWidth = MediaQuery.of(context).size.width;
   return Container(
-    margin: const EdgeInsets.all(10.0),
+    margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2.0),
     child: Card(
+      elevation: 2.0,
       child: InkWell(
         onTap: () {
           ChosenMovie chosenMovie = ChosenMovie(movie);
@@ -15,7 +17,7 @@ Widget buildMovieCard(BuildContext context, int index, Movie movie) {
               arguments: chosenMovie);
         },
         child: Container(
-          margin: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.only(right: 10.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -23,21 +25,27 @@ Widget buildMovieCard(BuildContext context, int index, Movie movie) {
                   ? SizedBox(
                       width: 100,
                       height: 150,
-                      child: Image.asset(
-                        'lib/assets/images/unavailable-image.jpg',
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: Image.asset(
+                          'lib/assets/images/image_unavailable.png',
+                        ),
                       ))
                   : SizedBox(
                       width: 100,
                       height: 150,
-                      child: FadeInImage(
-                        imageErrorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                              'lib/assets/images/unavailable-image.jpg');
-                        },
-                        placeholder:
-                            const AssetImage('lib/assets/images/loading.gif'),
-                        image: NetworkImage(EnvironmentConfig.IMAGE_BASE_URL +
-                            movie.posterPath),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4.0),
+                        child: FadeInImage(
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                                'lib/assets/images/image_unavailable.png');
+                          },
+                          placeholder:
+                              const AssetImage('lib/assets/images/loading.gif'),
+                          image: NetworkImage(EnvironmentConfig.IMAGE_BASE_URL +
+                              movie.posterPath),
+                        ),
                       ),
                     ),
               Padding(
@@ -46,7 +54,7 @@ Widget buildMovieCard(BuildContext context, int index, Movie movie) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: screenWidth / 2,
                       child: Text(
                         movie.originalTitle,
                         style: Theme.of(context).textTheme.bodyLarge,

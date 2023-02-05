@@ -43,7 +43,7 @@ class _SearchPageState extends State<SearchPage> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.only(top: 20.0, left: 20.0),
                           child: Text(
                             'Search movies',
                             style: Theme.of(context).textTheme.titleLarge,
@@ -51,7 +51,7 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: TextField(
                           controller: textController,
                           decoration: InputDecoration(

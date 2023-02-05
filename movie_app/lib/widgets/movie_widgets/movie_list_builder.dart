@@ -40,14 +40,19 @@ Widget buildMovieList(BuildContext context) {
                   }
                   return true;
                 },
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: state.popularMoviesResponse.moviesList!.length,
-                  itemBuilder: ((context, index) {
-                    final Movie popularMovie =
-                        state.popularMoviesResponse.moviesList![index];
-                    return buildMovieCard(context, index, popularMovie);
-                  }),
+                child: Scrollbar(
+                  child: Container(
+                    color: Colors.grey[100],
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: state.popularMoviesResponse.moviesList!.length,
+                      itemBuilder: ((context, index) {
+                        final Movie popularMovie =
+                            state.popularMoviesResponse.moviesList![index];
+                        return buildMovieCard(context, index, popularMovie);
+                      }),
+                    ),
+                  ),
                 ),
               ),
             );
@@ -92,14 +97,17 @@ Widget buildSearchResultsMovieList(
               );
             } else {
               return Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: state.popularMoviesResponse.moviesList!.length,
-                  itemBuilder: ((context, index) {
-                    final Movie searchResultMovie =
-                        state.popularMoviesResponse.moviesList![index];
-                    return buildMovieCard(context, index, searchResultMovie);
-                  }),
+                child: Container(
+                  color: Colors.grey[100],
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: state.popularMoviesResponse.moviesList!.length,
+                    itemBuilder: ((context, index) {
+                      final Movie searchResultMovie =
+                          state.popularMoviesResponse.moviesList![index];
+                      return buildMovieCard(context, index, searchResultMovie);
+                    }),
+                  ),
                 ),
               );
             }
@@ -135,14 +143,17 @@ Widget buildFavoriteMovieList(BuildContext context) {
           }
           if (state is FavoriteMoviesLoadedState) {
             return Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: state.favoriteMoviesResponse.length,
-                itemBuilder: ((context, index) {
-                  final Movie favoriteMovie =
-                      state.favoriteMoviesResponse[index];
-                  return buildMovieCard(context, index, favoriteMovie);
-                }),
+              child: Container(
+                color: Colors.grey[100],
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.favoriteMoviesResponse.length,
+                  itemBuilder: ((context, index) {
+                    final Movie favoriteMovie =
+                        state.favoriteMoviesResponse[index];
+                    return buildMovieCard(context, index, favoriteMovie);
+                  }),
+                ),
               ),
             );
           }

@@ -8,6 +8,8 @@ have been successfully fetched from API
 
 FavoriteMoviesLoadedState- becomes active after favorite movies 
 have been successfully fetched from local JSON file
+It has a "popularMoviesResponse" property inside "props" list
+which enables infinite scroll list functionality
 
 MoviesError - if an error occurs while fetching data
 this state enbables to display an error message

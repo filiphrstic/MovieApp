@@ -27,13 +27,19 @@ Widget buildCastMembersList(CastMembersBloc castMembersBloc, int movieID) {
           } else if (state is CastMembersLoading) {
             return buildLoading();
           } else if (state is CastMembersLoaded) {
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: state.castMembersResponse.castList!.length,
-              itemBuilder: (context, index) {
-                final castMember = state.castMembersResponse.castList![index];
-                return buildCastMemberCard(context, castMember);
-              },
+            return Scrollbar(
+              child: Container(
+                color: Colors.grey[200],
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: state.castMembersResponse.castList!.length,
+                  itemBuilder: (context, index) {
+                    final castMember =
+                        state.castMembersResponse.castList![index];
+                    return buildCastMemberCard(context, castMember);
+                  },
+                ),
+              ),
             );
           } else if (state is CastMembersError) {
             return Text(

@@ -20,6 +20,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey[100],
         appBar: const AppbarWidget(isHomepage: true),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),

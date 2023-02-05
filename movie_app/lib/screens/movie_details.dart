@@ -29,10 +29,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return BlocProvider(
       create: (context) => addToFavoritesBloc
         ..add(LoadMovieDetailsScreenEvent(widget.chosenMovie.chosenMovie)),
       child: Scaffold(
+        backgroundColor: Colors.grey[100],
         appBar: const AppbarWidget(isHomepage: false),
         body: SingleChildScrollView(
           child: Align(
@@ -42,71 +45,94 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Text(
+                    textAlign: TextAlign.center,
                     widget.chosenMovie.chosenMovie.originalTitle,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Row(
-                    children: [
-                      (widget.chosenMovie.chosenMovie.posterPath.isEmpty)
-                          ? SizedBox(
-                              height: MediaQuery.of(context).size.width / 3,
-                              child: Image.asset(
-                                  'lib/assets/images/unavailable-image.jpg'),
-                            )
-                          : SizedBox(
-                              height: MediaQuery.of(context).size.height / 3,
-                              child: Image.network(EnvironmentConfig
-                                      .IMAGE_BASE_URL +
-                                  widget.chosenMovie.chosenMovie.posterPath),
-                            ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height / 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Release date',
-                                style: Theme.of(context).textTheme.bodyText1,
-                              ),
-                              Text(widget.chosenMovie.chosenMovie.releaseDate),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text('Rating',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
-                              ),
-                              Text(widget.chosenMovie.chosenMovie.voteAverage),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text('Synopsis',
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
-                              ),
-                              SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width / 2 - 40,
-                                height: 150,
-                                child: SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Text(
-                                    widget.chosenMovie.chosenMovie.overview,
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Card(
+                    elevation: 2.0,
+                    child: Row(
+                      children: [
+                        (widget.chosenMovie.chosenMovie.posterPath.isEmpty)
+                            ? SizedBox(
+                                height: 275,
+                                child: Card(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: Image.asset(
+                                        'lib/assets/images/image_unavailable.png'),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(
+                                height: 275,
+                                child: Card(
+                                  elevation: 3.0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: Image.network(
+                                        EnvironmentConfig.IMAGE_BASE_URL +
+                                            widget.chosenMovie.chosenMovie
+                                                .posterPath),
                                   ),
                                 ),
                               ),
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: SizedBox(
+                            height: 270,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Release date',
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
+                                Text(
+                                    widget.chosenMovie.chosenMovie.releaseDate),
+                                const Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text('Rating',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                ),
+                                Text(
+                                    widget.chosenMovie.chosenMovie.voteAverage),
+                                const Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text('Synopsis',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                ),
+                                SizedBox(
+                                  width: screenWidth / 2 - 40,
+                                  height: 165,
+                                  child: Scrollbar(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.vertical,
+                                      child: Text(
+                                        widget.chosenMovie.chosenMovie.overview,
+                                        textAlign: TextAlign.justify,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -163,19 +189,33 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   }),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Cast',
-                      style: Theme.of(context).textTheme.titleMedium,
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10))),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5.0, horizontal: 15),
+                        child: Text(
+                          'Cast',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: buildCastMembersList(
-                      castMembersBloc, widget.chosenMovie.chosenMovie.id),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: SizedBox(
+                    height: screenHeight / 2,
+                    child: buildCastMembersList(
+                        castMembersBloc, widget.chosenMovie.chosenMovie.id),
+                  ),
                 ),
               ],
             ),
