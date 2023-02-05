@@ -1,5 +1,6 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/utilities/themes.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_list_builder.dart';
@@ -20,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: backgroundColor,
         appBar: const AppbarWidget(isHomepage: true),
         body: DoubleBackToCloseApp(
           snackBar: const SnackBar(content: Text('Tap back again to leave')),

@@ -5,3 +5,7 @@ Widget buildLoading() {
     child: CircularProgressIndicator(),
   );
 }
+
+AssetImage buildLoadingGif() {
+  return const AssetImage('lib/assets/images/loading.gif');
+}

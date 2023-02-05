@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app/models/cast_members/cast_member.dart';
-import 'package:movie_app/utilities/environment_variables.dart';
+import 'package:movie_app/widgets/images/image_builder.dart';
 
 Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
   final screenWidth = MediaQuery.of(context).size.width;
@@ -12,30 +12,8 @@ Widget buildCastMemberCard(BuildContext context, CastMember castMember) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           castMember.profilePath!.isEmpty
-              ? SizedBox(
-                  width: 75,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4.0),
-                    child: Image.asset(
-                      'lib/assets/images/image_unavailable.png',
-                    ),
-                  ))
-              : SizedBox(
-                  width: 75,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4.0),
-                    child: FadeInImage(
-                      imageErrorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
-                            'lib/assets/images/image_unavailable.png');
-                      },
-                      placeholder:
-                          const AssetImage('lib/assets/images/loading.gif'),
-                      image: NetworkImage(EnvironmentConfig.IMAGE_BASE_URL +
-                          castMember.profilePath!),
-                    ),
-                  ),
-                ),
+              ? buildImageUnavailable(75, null)
+              : buildImage(75, null, castMember.profilePath),
           Padding(
             padding: const EdgeInsets.only(left: 10.0, top: 20.0),
             child: Column(

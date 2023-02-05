@@ -4,10 +4,11 @@ import 'package:movie_app/blocs/add_to_favorites_bloc/add_to_favorites_bloc.dart
 import 'package:movie_app/blocs/cast_members_bloc/cast_members_bloc.dart';
 import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/screen_arguments/chosen_movie.dart';
-import 'package:movie_app/utilities/environment_variables.dart';
+import 'package:movie_app/utilities/themes.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
 import 'package:movie_app/widgets/cast_members/cast_members_list.dart';
+import 'package:movie_app/widgets/images/image_builder.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   final ChosenMovie chosenMovie;
@@ -35,7 +36,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
       create: (context) => addToFavoritesBloc
         ..add(LoadMovieDetailsScreenEvent(widget.chosenMovie.chosenMovie)),
       child: Scaffold(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: backgroundColor,
         appBar: const AppbarWidget(isHomepage: false),
         body: SingleChildScrollView(
           child: Align(
@@ -57,29 +58,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                     child: Row(
                       children: [
                         (widget.chosenMovie.chosenMovie.posterPath.isEmpty)
-                            ? SizedBox(
-                                height: 275,
-                                child: Card(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                    child: Image.asset(
-                                        'lib/assets/images/image_unavailable.png'),
-                                  ),
-                                ),
-                              )
-                            : SizedBox(
-                                height: 275,
-                                child: Card(
-                                  elevation: 3.0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4.0),
-                                    child: Image.network(
-                                        EnvironmentConfig.IMAGE_BASE_URL +
-                                            widget.chosenMovie.chosenMovie
-                                                .posterPath),
-                                  ),
-                                ),
-                              ),
+                            ? buildImageUnavailable(null, 275)
+                            : buildImage(null, 275,
+                                widget.chosenMovie.chosenMovie.posterPath),
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0),
                           child: SizedBox(
@@ -192,7 +173,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: backgroundColorDark,
                         borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10))),

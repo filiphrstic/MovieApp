@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
 import 'package:movie_app/models/movies/movie.dart';
+import 'package:movie_app/utilities/themes.dart';
 import 'package:movie_app/widgets/loading/loading_widgets.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_card_builder.dart';
 
@@ -42,7 +43,7 @@ Widget buildMovieList(BuildContext context) {
                 },
                 child: Scrollbar(
                   child: Container(
-                    color: Colors.grey[100],
+                    color: backgroundColor,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemCount: state.popularMoviesResponse.moviesList!.length,
@@ -98,7 +99,7 @@ Widget buildSearchResultsMovieList(
             } else {
               return Expanded(
                 child: Container(
-                  color: Colors.grey[100],
+                  color: backgroundColor,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                     itemCount: state.popularMoviesResponse.moviesList!.length,
@@ -144,7 +145,7 @@ Widget buildFavoriteMovieList(BuildContext context) {
           if (state is FavoriteMoviesLoadedState) {
             return Expanded(
               child: Container(
-                color: Colors.grey[100],
+                color: backgroundColor,
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   itemCount: state.favoriteMoviesResponse.length,
