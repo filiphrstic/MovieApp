@@ -38,3 +38,12 @@ class GetSearchResultsMovieList extends MovieEvent {
 }
 
 class GetFavoriteMoviesList extends MovieEvent {}
+
+class GetGenres extends MovieEvent {}
+
+class FilterChosenEvent extends MovieEvent {
+  final List<int> chosenGenreIDs;
+  final MovieResponse searchResults;
+
+  const FilterChosenEvent(this.chosenGenreIDs, this.searchResults);
+}

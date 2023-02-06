@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/blocs/checkbox_cubit/checkbox_cubit.dart';
 import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
 import 'package:movie_app/models/movies/movie.dart';
 import 'package:movie_app/utilities/themes.dart';
@@ -75,6 +76,8 @@ Prior to that the widget will return a simple text message.
 */
 Widget buildSearchResultsMovieList(
     BuildContext context, MovieBloc searchResultsMovieBloc) {
+  final checkboxCubit = CheckboxCubit();
+  final List<int> chosenGenreIds = [];
   return BlocProvider(
     create: (context) => searchResultsMovieBloc,
     child: BlocListener<MovieBloc, MovieState>(
@@ -98,17 +101,61 @@ Widget buildSearchResultsMovieList(
               );
             } else {
               return Expanded(
-                child: Container(
-                  color: backgroundColor,
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: state.popularMoviesResponse.moviesList!.length,
-                    itemBuilder: ((context, index) {
-                      final Movie searchResultMovie =
-                          state.popularMoviesResponse.moviesList![index];
-                      return buildMovieCard(context, index, searchResultMovie);
-                    }),
-                  ),
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: BlocProvider(
+                      create: (context) => checkboxCubit,
+                      child: BlocBuilder<CheckboxCubit, CheckboxState>(
+                          builder: (context, checkboxState) {
+                        return GridView.builder(
+                            itemCount:
+                                state.popularMoviesResponse.genresList!.length,
+                            itemBuilder: (context, index) {
+                              final genre = state
+                                  .popularMoviesResponse.genresList![index];
+                              return CheckboxListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  activeColor: primaryColor,
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  dense: true,
+                                  title: Text(genre.name),
+                                  value: genre.isChecked,
+                                  onChanged: ((value) {
+                                    genre.isChecked = value!;
+                                    checkboxCubit.changeValue(value);
+                                    if (value) {
+                                      chosenGenreIds.add(genre.id);
+                                    } else {
+                                      chosenGenreIds.removeWhere(
+                                          (element) => element == genre.id);
+                                    }
+                                    searchResultsMovieBloc.add(
+                                        FilterChosenEvent(chosenGenreIds,
+                                            state.popularMoviesResponse));
+                                  }));
+                            },
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: 6,
+                            ));
+                      }),
+                    )),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount:
+                            state.popularMoviesResponse.moviesList!.length,
+                        itemBuilder: ((context, index) {
+                          final Movie searchResultMovie =
+                              state.popularMoviesResponse.moviesList![index];
+                          return buildMovieCard(
+                              context, index, searchResultMovie);
+                        }),
+                      ),
+                    ),
+                  ],
                 ),
               );
             }

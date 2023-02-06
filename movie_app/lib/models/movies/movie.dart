@@ -11,6 +11,7 @@ class Movie extends Equatable {
   final String posterPath;
   final String releaseDate;
   final String voteAverage;
+  final List<dynamic> genresIdList;
 
   const Movie({
     required this.id,
@@ -19,25 +20,26 @@ class Movie extends Equatable {
     required this.posterPath,
     required this.releaseDate,
     required this.voteAverage,
+    required this.genresIdList,
   });
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
-      id: json['id'],
-      originalTitle: (json['original_title'] != null)
-          ? json['original_title']
-          : "Title unavailable",
-      overview: (json['overview'] != null)
-          ? json['overview']
-          : "Synopsis unavailable",
-      posterPath: (json['poster_path'] != null) ? json['poster_path'] : "",
-      releaseDate: (json['release_date'] != null)
-          ? json['release_date']
-          : "Release date unavailable",
-      voteAverage: (json['vote_average'] != null)
-          ? json['vote_average'].toString()
-          : "Rating unavailable",
-    );
+        id: json['id'],
+        originalTitle: (json['original_title'] != null)
+            ? json['original_title']
+            : "Title unavailable",
+        overview: (json['overview'] != null)
+            ? json['overview']
+            : "Synopsis unavailable",
+        posterPath: (json['poster_path'] != null) ? json['poster_path'] : "",
+        releaseDate: (json['release_date'] != null)
+            ? json['release_date']
+            : "Release date unavailable",
+        voteAverage: (json['vote_average'] != null)
+            ? json['vote_average'].toString()
+            : "Rating unavailable",
+        genresIdList: (json['genre_ids'] != null) ? json['genre_ids'] : []);
   }
 
   Map<String, dynamic> toJson() {

@@ -1,3 +1,4 @@
+import 'package:movie_app/models/genres/genre.dart';
 import 'package:movie_app/models/movies/movie.dart';
 
 //Class to store information from API response
@@ -8,6 +9,8 @@ class MovieResponse {
   List<Movie>? moviesList;
   int? totalPages;
   int? totalResults;
+  List<Genre>? genresList = [];
+  List<Movie>? searchResultsList = [];
   String? error;
 
   MovieResponse({

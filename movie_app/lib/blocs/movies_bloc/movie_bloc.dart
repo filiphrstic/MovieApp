@@ -69,8 +69,44 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     on<GetSearchResultsMovieList>((event, emit) async {
       try {
         emit(MovieLoadingState());
-        final response = await tmdbProvider.fetchSearchResults(event.query);
-        emit(MovieLoadedState(response));
+        final responseGenres = await tmdbProvider.fetchGenres();
+        final responseSearchResults =
+            await tmdbProvider.fetchSearchResults(event.query);
+        responseSearchResults.genresList = responseGenres.genresList;
+        responseSearchResults.searchResultsList =
+            responseSearchResults.moviesList;
+        emit(MovieLoadedState(responseSearchResults));
+      } on Error {
+        emit(const MoviesError(
+            "Unable to fetch data. Please check your internet connection!"));
+      }
+    });
+
+    on<FilterChosenEvent>((event, emit) async {
+      try {
+        emit(MovieLoadingState());
+        // final responseGenres = await tmdbProvider.fetchGenres();
+        // final responseSearchResults =
+        //     await tmdbProvider.fetchSearchResults(event.query);
+        // responseSearchResults.genresList = responseGenres.genresList;
+        List<Movie> filteredMovieList = [];
+
+        // var chosenIDsSet = event.chosenGenreIDs.toSet();
+        // var movieIDs = event.searchResults.moviesList
+        if (event.chosenGenreIDs.isEmpty) {
+          event.searchResults.moviesList =
+              event.searchResults.searchResultsList;
+        } else {
+          event.searchResults.moviesList!.forEach((movie) {
+            // var movieGenreIds = movie.genresIdList.toSet();
+            if (event.chosenGenreIDs.every((chosenGenreID) =>
+                movie.genresIdList.contains(chosenGenreID))) {
+              filteredMovieList.add(movie);
+            }
+          });
+          event.searchResults.moviesList = filteredMovieList;
+        }
+        emit(MovieLoadedState(event.searchResults));
       } on Error {
         emit(const MoviesError(
             "Unable to fetch data. Please check your internet connection!"));

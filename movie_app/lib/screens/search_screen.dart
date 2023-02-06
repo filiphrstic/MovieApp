@@ -23,7 +23,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final MovieBloc searchMovieBloc = MovieBloc();
-
+    // final GenreBloc genreBloc = GenreBloc();
     return BlocProvider(
       create: (context) => searchMovieBloc,
       child: BlocListener<MovieBloc, MovieState>(
