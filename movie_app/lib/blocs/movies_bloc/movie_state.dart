@@ -30,7 +30,7 @@ class MovieLoadedState extends MovieState {
   const MovieLoadedState(this.movieResponse);
 
   @override
-  List<Object?> get props => [movieResponse.moviesList];
+  List<Object?> get props => [movieResponse.moviesList, movieResponse];
 }
 
 class FavoriteMoviesLoadedState extends MovieState {
