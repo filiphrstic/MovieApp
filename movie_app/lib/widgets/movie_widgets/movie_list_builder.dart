@@ -78,7 +78,12 @@ Prior to that the widget will return a simple text message.
 Widget buildSearchResultsMovieList(
     BuildContext context, MovieBloc searchResultsMovieBloc) {
   final checkboxCubit = CheckboxCubit();
-  final List<int> chosenGenreIds = [];
+  List<int> yearsForDropdown = [];
+  for (var i = 1920; i < 2024; i++) {
+    yearsForDropdown.add(i);
+  }
+  // int chosenYear = 0;
+  // final List<int> chosenGenreIds = [];
   return BlocProvider(
     create: (context) => searchResultsMovieBloc,
     child: BlocListener<MovieBloc, MovieState>(
@@ -104,64 +109,140 @@ Widget buildSearchResultsMovieList(
               return Expanded(
                 child: Column(
                   children: [
-                    // Expanded(
-                    // child:
                     BlocProvider(
                       create: (context) => checkboxCubit,
                       child: BlocBuilder<CheckboxCubit, CheckboxState>(
                           builder: (context, checkboxState) {
-                        return ExpandablePanel(
-                          collapsed: Container(),
-                          header: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              'Filter by genres',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                          )),
-                          expanded: SizedBox(
-                            height: 150,
-                            child: GridView.builder(
-                                itemCount: state
-                                    .popularMoviesResponse.genresList!.length,
-                                itemBuilder: (context, index) {
-                                  final genre = state
-                                      .popularMoviesResponse.genresList![index];
-                                  return CheckboxListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      activeColor: primaryColor,
-                                      controlAffinity:
-                                          ListTileControlAffinity.leading,
-                                      dense: true,
-                                      title: Text(genre.name),
-                                      value: genre.isChecked,
-                                      onChanged: ((value) {
-                                        genre.isChecked = value!;
-                                        checkboxCubit.changeValue(value);
-                                        if (value) {
-                                          chosenGenreIds.add(genre.id);
-                                        } else {
-                                          chosenGenreIds.removeWhere(
-                                              (element) => element == genre.id);
-                                        }
-                                        searchResultsMovieBloc.add(
-                                            FilterChosenEvent(chosenGenreIds,
-                                                state.popularMoviesResponse));
-                                      }));
-                                },
-                                gridDelegate:
-                                    const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  childAspectRatio: 6,
+                        return Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: ExpandablePanel(
+                                collapsed: Container(),
+                                header: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Text(
+                                    'Filter by genres',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
                                 )),
-                          ),
+                                expanded: SizedBox(
+                                  height: 150,
+                                  child: GridView.builder(
+                                      itemCount: state.popularMoviesResponse
+                                          .genresList!.length,
+                                      itemBuilder: (context, index) {
+                                        final genre = state
+                                            .popularMoviesResponse
+                                            .genresList![index];
+                                        return CheckboxListTile(
+                                            contentPadding: EdgeInsets.zero,
+                                            activeColor: primaryColor,
+                                            controlAffinity:
+                                                ListTileControlAffinity.leading,
+                                            dense: true,
+                                            title: Text(genre.name),
+                                            value: genre.isChecked,
+                                            onChanged: ((value) {
+                                              genre.isChecked = value!;
+                                              checkboxCubit.changeValue(value);
+                                              if (value) {
+                                                state.popularMoviesResponse
+                                                    .listChosenGenresFilter!
+                                                    .add(genre.id);
+                                              } else {
+                                                state.popularMoviesResponse
+                                                    .listChosenGenresFilter!
+                                                    .removeWhere((element) =>
+                                                        element == genre.id);
+                                              }
+                                              searchResultsMovieBloc.add(
+                                                  FilterChosenEvent(
+                                                      state
+                                                          .popularMoviesResponse
+                                                          .listChosenGenresFilter!,
+                                                      state
+                                                          .popularMoviesResponse
+                                                          .year,
+                                                      state
+                                                          .popularMoviesResponse));
+                                            }));
+                                      },
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 200,
+                                        childAspectRatio: 6,
+                                      )),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 3,
+                              child: ExpandablePanel(
+                                collapsed: Container(),
+                                header: Center(
+                                    child: Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Text(
+                                    'Filter by year',
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                )),
+                                expanded: Center(
+                                  child: SizedBox(
+                                      height: 50,
+                                      child: DropdownButton<int>(
+                                        menuMaxHeight: 400,
+                                        items: yearsForDropdown.map((year) {
+                                          return DropdownMenuItem(
+                                              value: year,
+                                              child: Text(year.toString()));
+                                        }).toList(),
+                                        onChanged: ((value) {
+                                          // chosenYear = value!;
+                                          searchResultsMovieBloc.add(
+                                              FilterChosenEvent(
+                                                  state.popularMoviesResponse
+                                                      .listChosenGenresFilter!,
+                                                  value,
+                                                  state.popularMoviesResponse));
+                                        }),
+                                        hint: const Text('Select year'),
+                                        value: state.popularMoviesResponse.year,
+                                      )),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: IconButton(
+                                  icon: const Icon(Icons.cancel),
+                                  color: primaryColor,
+                                  onPressed: () {
+                                    state.popularMoviesResponse
+                                        .listChosenGenresFilter!
+                                        .clear();
+                                    state.popularMoviesResponse.year = null;
+                                    for (var element in state
+                                        .popularMoviesResponse.genresList!) {
+                                      element.isChecked = false;
+                                    }
+                                    searchResultsMovieBloc.add(
+                                        FilterChosenEvent(
+                                            state.popularMoviesResponse
+                                                .listChosenGenresFilter!,
+                                            state.popularMoviesResponse.year,
+                                            state.popularMoviesResponse));
+                                  }),
+                            ),
+                          ],
                         );
                       }),
                     ),
-                    // ),
-
                     Expanded(
+                      flex: 1,
                       child: ListView.builder(
                         itemCount:
                             state.popularMoviesResponse.moviesList!.length,

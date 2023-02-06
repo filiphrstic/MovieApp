@@ -11,6 +11,8 @@ class MovieResponse {
   int? totalResults;
   List<Genre>? genresList = [];
   List<Movie>? searchResultsList = [];
+  List<int>? listChosenGenresFilter = [];
+  int? year;
   String? error;
 
   MovieResponse({

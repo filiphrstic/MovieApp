@@ -84,28 +84,107 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
     on<FilterChosenEvent>((event, emit) async {
       try {
+        event.chosenGenreIDs.forEach(
+          (element) {
+            print(element);
+          },
+        );
+        print(event.chosenYear);
         emit(MovieLoadingState());
-        // final responseGenres = await tmdbProvider.fetchGenres();
-        // final responseSearchResults =
-        //     await tmdbProvider.fetchSearchResults(event.query);
-        // responseSearchResults.genresList = responseGenres.genresList;
-        List<Movie> filteredMovieList = [];
 
-        // var chosenIDsSet = event.chosenGenreIDs.toSet();
-        // var movieIDs = event.searchResults.moviesList
-        if (event.chosenGenreIDs.isEmpty) {
-          event.searchResults.moviesList =
-              event.searchResults.searchResultsList;
-        } else {
-          event.searchResults.moviesList!.forEach((movie) {
-            // var movieGenreIds = movie.genresIdList.toSet();
+        List<Movie> filteredMovieListByGenre = [];
+        List<Movie> filteredMovieListByYear = [];
+        List<Movie> initialResultsWithoutFilter =
+            event.searchResults.searchResultsList!;
+        List<Movie> result = [];
+        int? year = event.chosenYear;
+        List<int> genres = event.chosenGenreIDs;
+
+        if (year == null && genres.isEmpty) {
+          event.searchResults.moviesList = initialResultsWithoutFilter;
+        } else if (year == null && genres.isNotEmpty) {
+          event.searchResults.listChosenGenresFilter = genres;
+          for (var movie in event.searchResults.searchResultsList!) {
             if (event.chosenGenreIDs.every((chosenGenreID) =>
                 movie.genresIdList.contains(chosenGenreID))) {
-              filteredMovieList.add(movie);
+              filteredMovieListByGenre.add(movie);
             }
-          });
-          event.searchResults.moviesList = filteredMovieList;
+          }
+          event.searchResults.moviesList = filteredMovieListByGenre;
+        } else if (year != null && genres.isEmpty) {
+          event.searchResults.year = event.chosenYear!;
+          for (var movie in event.searchResults.searchResultsList!) {
+            DateTime movieDateTime = DateTime.parse(movie.releaseDate);
+            if (event.chosenYear == movieDateTime.year) {
+              filteredMovieListByYear.add(movie);
+            }
+          }
+          event.searchResults.moviesList = filteredMovieListByYear;
+        } else if (year != null && genres.isNotEmpty) {
+          event.searchResults.listChosenGenresFilter = genres;
+          event.searchResults.year = event.chosenYear!;
+          for (var movie in event.searchResults.searchResultsList!) {
+            if (event.chosenGenreIDs.every((chosenGenreID) =>
+                movie.genresIdList.contains(chosenGenreID))) {
+              filteredMovieListByGenre.add(movie);
+            }
+          }
+          for (var movie in event.searchResults.searchResultsList!) {
+            DateTime movieDateTime = DateTime.parse(movie.releaseDate);
+            if (event.chosenYear == movieDateTime.year) {
+              filteredMovieListByYear.add(movie);
+            }
+          }
+          filteredMovieListByGenre.removeWhere(
+              (element) => !filteredMovieListByYear.contains(element));
+          event.searchResults.moviesList = filteredMovieListByGenre;
         }
+
+        // if (event.chosenGenreIDs.isEmpty && event.chosenYear == 0) {
+        //   event.searchResults.moviesList =
+        //       event.searchResults.searchResultsList;
+        // } else {
+        //   if (event.chosenGenreIDs.isNotEmpty) {
+        //   } else {
+        //     if (event.chosenYear != 0) {
+        //       filteredMovieListByGenre = [];
+        //     } else {
+        //       filteredMovieListByGenre = event.searchResults.searchResultsList!;
+        //     }
+        //   }
+        //   if (event.chosenYear != 0) {
+        //   } else {
+        //     if (event.chosenGenreIDs.isEmpty) {
+        //       filteredMovieListByYear = event.searchResults.searchResultsList!;
+        //     } else {
+        //       filteredMovieListByYear = [];
+        //     }
+        //   }
+        // }
+
+        // filteredMovieListByGenre.forEach((element) {
+        //   print(element.originalTitle);
+        // });
+        // filteredMovieListByYear.forEach((element) {
+        //   print('year ' + element.originalTitle);
+        // // });
+        // List<Movie> resultList = [];
+        // // if (filteredMovieListByGenre.isNotEmpty &&
+        // //     filteredMovieListByYear.isNotEmpty) {
+
+        // // }
+        // if (filteredMovieListByYear.isEmpty &&
+        //     filteredMovieListByGenre.isEmpty) {
+        //   resultList = event.searchResults.searchResultsList!;
+        // } else if (filteredMovieListByYear.isEmpty) {
+        //   resultList = filteredMovieListByGenre;
+        // } else if (filteredMovieListByYear.isEmpty)
+
+        // List<Movie> allResults =
+        //     filteredMovieListByGenre + filteredMovieListByYear;
+        // allResults.addAll(filteredMovieListByYear);
+        // event.searchResults.moviesList = resultList.toSet().toList();
+
         emit(MovieLoadedState(event.searchResults));
       } on Error {
         emit(const MoviesError(

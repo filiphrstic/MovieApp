@@ -43,7 +43,9 @@ class GetGenres extends MovieEvent {}
 
 class FilterChosenEvent extends MovieEvent {
   final List<int> chosenGenreIDs;
+  final int? chosenYear;
   final MovieResponse searchResults;
 
-  const FilterChosenEvent(this.chosenGenreIDs, this.searchResults);
+  const FilterChosenEvent(
+      this.chosenGenreIDs, this.chosenYear, this.searchResults);
 }

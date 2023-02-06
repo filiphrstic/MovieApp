@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/movies_bloc/movie_bloc.dart';
+import 'package:movie_app/utilities/themes.dart';
 import 'package:movie_app/widgets/bars/appbar.dart';
 import 'package:movie_app/widgets/bars/bottom_navbar.dart';
 import 'package:movie_app/widgets/movie_widgets/movie_list_builder.dart';
@@ -35,27 +36,19 @@ class _SearchPageState extends State<SearchPage> {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
               child: Scaffold(
+                backgroundColor: backgroundColor,
                 appBar: const AppbarWidget(isHomepage: false),
                 body: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      // Align(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(top: 20.0, left: 20.0),
-                      //     child: Text(
-                      //       'Search movies',
-                      //       style: Theme.of(context).textTheme.titleLarge,
-                      //     ),
-                      //   ),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 10.0),
                         child: TextField(
                           controller: textController,
                           decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.only(left: 10.0),
                             border: const OutlineInputBorder(),
                             suffixIcon: TextButton.icon(
                               icon: const Icon(Icons.search),

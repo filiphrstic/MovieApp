@@ -33,9 +33,10 @@ class Movie extends Equatable {
             ? json['overview']
             : "Synopsis unavailable",
         posterPath: (json['poster_path'] != null) ? json['poster_path'] : "",
-        releaseDate: (json['release_date'] != null)
-            ? json['release_date']
-            : "Release date unavailable",
+        releaseDate:
+            (json['release_date'] != null && json['release_date'] != "")
+                ? json['release_date']
+                : "1900-01-01",
         voteAverage: (json['vote_average'] != null)
             ? json['vote_average'].toString()
             : "Rating unavailable",
