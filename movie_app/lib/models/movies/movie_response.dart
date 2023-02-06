@@ -2,17 +2,19 @@ import 'package:movie_app/models/genres/genre.dart';
 import 'package:movie_app/models/movies/movie.dart';
 
 //Class to store information from API response
-//It also creates instances of Movie class and stores them to a list
+//Creates instances of Movie class and stores them to a list
+//It also has properties used for filter functionality
 
 class MovieResponse {
   int? currentPage;
   List<Movie>? moviesList;
   int? totalPages;
   int? totalResults;
-  List<Genre>? genresList = [];
+
+  List<Genre>? allGenresList = [];
   List<Movie>? searchResultsList = [];
-  List<int>? listChosenGenresFilter = [];
-  int? year;
+  List<int>? chosenGenresList = [];
+  int? chosenYear;
   String? error;
 
   MovieResponse({

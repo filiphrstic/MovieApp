@@ -24,7 +24,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final MovieBloc searchMovieBloc = MovieBloc();
-    // final GenreBloc genreBloc = GenreBloc();
     return BlocProvider(
       create: (context) => searchMovieBloc,
       child: BlocListener<MovieBloc, MovieState>(
@@ -50,8 +49,11 @@ class _SearchPageState extends State<SearchPage> {
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(left: 10.0),
                             border: const OutlineInputBorder(),
-                            suffixIcon: TextButton.icon(
-                              icon: const Icon(Icons.search),
+                            prefixIcon: const Icon(
+                              Icons.search_rounded,
+                              color: primaryColor,
+                            ),
+                            suffixIcon: TextButton(
                               onPressed: () {
                                 if (textController.text.isEmpty) {
                                   const snackbarMessage = SnackBar(
@@ -64,11 +66,13 @@ class _SearchPageState extends State<SearchPage> {
                                   WidgetsBinding
                                       .instance.focusManager.primaryFocus
                                       ?.unfocus();
-                                  searchMovieBloc.add(GetSearchResultsMovieList(
-                                      textController.text));
+                                  searchMovieBloc.add(
+                                    GetSearchResultsMovieList(
+                                        textController.text),
+                                  );
                                 }
                               },
-                              label: const Text('Search'),
+                              child: const Text('Search'),
                             ),
                           ),
                         ),

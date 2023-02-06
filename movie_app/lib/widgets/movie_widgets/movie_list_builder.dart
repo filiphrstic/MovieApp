@@ -25,7 +25,9 @@ Widget buildMovieList(BuildContext context) {
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
           if (state is MovieInitialState) {
-            movieBloc.add(GetPopularMoviesList());
+            movieBloc.add(
+              GetPopularMoviesList(),
+            );
             return buildLoading();
           }
           if (state is MovieLoadingState) {
@@ -37,9 +39,10 @@ Widget buildMovieList(BuildContext context) {
                 onNotification: (notification) {
                   if (notification.metrics.atEdge &&
                       notification.metrics.pixels > 0) {
-                    movieBloc.add(GetMorePopularMoviesList(
-                        state.popularMoviesResponse.moviesList!,
-                        state.popularMoviesResponse.currentPage!));
+                    movieBloc.add(
+                      GetMorePopularMoviesList(state.movieResponse.moviesList!,
+                          state.movieResponse.currentPage!),
+                    );
                   }
                   return true;
                 },
@@ -48,10 +51,10 @@ Widget buildMovieList(BuildContext context) {
                     color: backgroundColor,
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
-                      itemCount: state.popularMoviesResponse.moviesList!.length,
+                      itemCount: state.movieResponse.moviesList!.length,
                       itemBuilder: ((context, index) {
                         final Movie popularMovie =
-                            state.popularMoviesResponse.moviesList![index];
+                            state.movieResponse.moviesList![index];
                         return buildMovieCard(context, index, popularMovie);
                       }),
                     ),
@@ -61,7 +64,9 @@ Widget buildMovieList(BuildContext context) {
             );
           }
           if (state is MoviesError) {
-            return Text(state.message.toString());
+            return Text(
+              state.message.toString(),
+            );
           } else {
             return Container();
           }
@@ -82,8 +87,6 @@ Widget buildSearchResultsMovieList(
   for (var i = 1920; i < 2024; i++) {
     yearsForDropdown.add(i);
   }
-  // int chosenYear = 0;
-  // final List<int> chosenGenreIds = [];
   return BlocProvider(
     create: (context) => searchResultsMovieBloc,
     child: BlocListener<MovieBloc, MovieState>(
@@ -100,7 +103,7 @@ Widget buildSearchResultsMovieList(
             return buildLoading();
           }
           if (state is MovieLoadedState) {
-            if (state.popularMoviesResponse.moviesList == null) {
+            if (state.movieResponse.moviesList == null) {
               return const Padding(
                 padding: EdgeInsets.only(top: 20.0),
                 child: Text('No results found'),
@@ -118,6 +121,9 @@ Widget buildSearchResultsMovieList(
                             Expanded(
                               flex: 3,
                               child: ExpandablePanel(
+                                theme: const ExpandableThemeData(
+                                  iconColor: primaryColor,
+                                ),
                                 collapsed: Container(),
                                 header: Center(
                                     child: Padding(
@@ -125,62 +131,65 @@ Widget buildSearchResultsMovieList(
                                   child: Text(
                                     'Filter by genres',
                                     style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 )),
                                 expanded: SizedBox(
                                   height: 150,
-                                  child: GridView.builder(
-                                      itemCount: state.popularMoviesResponse
-                                          .genresList!.length,
-                                      itemBuilder: (context, index) {
-                                        final genre = state
-                                            .popularMoviesResponse
-                                            .genresList![index];
-                                        return CheckboxListTile(
-                                            contentPadding: EdgeInsets.zero,
-                                            activeColor: primaryColor,
-                                            controlAffinity:
-                                                ListTileControlAffinity.leading,
-                                            dense: true,
-                                            title: Text(genre.name),
-                                            value: genre.isChecked,
-                                            onChanged: ((value) {
-                                              genre.isChecked = value!;
-                                              checkboxCubit.changeValue(value);
-                                              if (value) {
-                                                state.popularMoviesResponse
-                                                    .listChosenGenresFilter!
-                                                    .add(genre.id);
-                                              } else {
-                                                state.popularMoviesResponse
-                                                    .listChosenGenresFilter!
-                                                    .removeWhere((element) =>
-                                                        element == genre.id);
-                                              }
-                                              searchResultsMovieBloc.add(
-                                                  FilterChosenEvent(
-                                                      state
-                                                          .popularMoviesResponse
-                                                          .listChosenGenresFilter!,
-                                                      state
-                                                          .popularMoviesResponse
-                                                          .year,
-                                                      state
-                                                          .popularMoviesResponse));
-                                            }));
-                                      },
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 200,
-                                        childAspectRatio: 6,
-                                      )),
+                                  child: ListView.builder(
+                                    itemCount: state
+                                        .movieResponse.allGenresList!.length,
+                                    itemBuilder: (context, index) {
+                                      final genre = state
+                                          .movieResponse.allGenresList![index];
+                                      return CheckboxListTile(
+                                        contentPadding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        activeColor: primaryColor,
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        visualDensity:
+                                            const VisualDensity(vertical: -4),
+                                        title: Text(
+                                          genre.name,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                        value: genre.isChecked,
+                                        onChanged: ((value) {
+                                          genre.isChecked = value!;
+                                          checkboxCubit.changeValue(value);
+                                          if (value) {
+                                            state
+                                                .movieResponse.chosenGenresList!
+                                                .add(genre.id);
+                                          } else {
+                                            state
+                                                .movieResponse.chosenGenresList!
+                                                .removeWhere((element) =>
+                                                    element == genre.id);
+                                          }
+                                          searchResultsMovieBloc.add(
+                                            FilterChosenEvent(
+                                                state.movieResponse
+                                                    .chosenGenresList!,
+                                                state.movieResponse.chosenYear,
+                                                state.movieResponse),
+                                          );
+                                        }),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
                               flex: 3,
                               child: ExpandablePanel(
+                                theme: const ExpandableThemeData(
+                                  iconColor: primaryColor,
+                                ),
                                 collapsed: Container(),
                                 header: Center(
                                     child: Padding(
@@ -188,31 +197,36 @@ Widget buildSearchResultsMovieList(
                                   child: Text(
                                     'Filter by year',
                                     style:
-                                        Theme.of(context).textTheme.bodyText1,
+                                        Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 )),
                                 expanded: Center(
                                   child: SizedBox(
-                                      height: 50,
-                                      child: DropdownButton<int>(
-                                        menuMaxHeight: 400,
-                                        items: yearsForDropdown.map((year) {
-                                          return DropdownMenuItem(
-                                              value: year,
-                                              child: Text(year.toString()));
-                                        }).toList(),
-                                        onChanged: ((value) {
-                                          // chosenYear = value!;
-                                          searchResultsMovieBloc.add(
-                                              FilterChosenEvent(
-                                                  state.popularMoviesResponse
-                                                      .listChosenGenresFilter!,
-                                                  value,
-                                                  state.popularMoviesResponse));
-                                        }),
-                                        hint: const Text('Select year'),
-                                        value: state.popularMoviesResponse.year,
-                                      )),
+                                    height: 50,
+                                    child: DropdownButton<int>(
+                                      iconEnabledColor: primaryColor,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      menuMaxHeight: 400,
+                                      items: yearsForDropdown.map((year) {
+                                        return DropdownMenuItem(
+                                            value: year,
+                                            child: Text(year.toString()));
+                                      }).toList(),
+                                      onChanged: ((value) {
+                                        searchResultsMovieBloc.add(
+                                          FilterChosenEvent(
+                                              state.movieResponse
+                                                  .chosenGenresList!,
+                                              value,
+                                              state.movieResponse),
+                                        );
+                                      }),
+                                      hint: const Text('Select year'),
+                                      value: state.movieResponse.chosenYear,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -221,20 +235,19 @@ Widget buildSearchResultsMovieList(
                                   icon: const Icon(Icons.cancel),
                                   color: primaryColor,
                                   onPressed: () {
-                                    state.popularMoviesResponse
-                                        .listChosenGenresFilter!
+                                    state.movieResponse.chosenGenresList!
                                         .clear();
-                                    state.popularMoviesResponse.year = null;
-                                    for (var element in state
-                                        .popularMoviesResponse.genresList!) {
+                                    state.movieResponse.chosenYear = null;
+                                    for (var element
+                                        in state.movieResponse.allGenresList!) {
                                       element.isChecked = false;
                                     }
                                     searchResultsMovieBloc.add(
-                                        FilterChosenEvent(
-                                            state.popularMoviesResponse
-                                                .listChosenGenresFilter!,
-                                            state.popularMoviesResponse.year,
-                                            state.popularMoviesResponse));
+                                      FilterChosenEvent(
+                                          state.movieResponse.chosenGenresList!,
+                                          state.movieResponse.chosenYear,
+                                          state.movieResponse),
+                                    );
                                   }),
                             ),
                           ],
@@ -244,11 +257,10 @@ Widget buildSearchResultsMovieList(
                     Expanded(
                       flex: 1,
                       child: ListView.builder(
-                        itemCount:
-                            state.popularMoviesResponse.moviesList!.length,
+                        itemCount: state.movieResponse.moviesList!.length,
                         itemBuilder: ((context, index) {
                           final Movie searchResultMovie =
-                              state.popularMoviesResponse.moviesList![index];
+                              state.movieResponse.moviesList![index];
                           return buildMovieCard(
                               context, index, searchResultMovie);
                         }),

@@ -72,7 +72,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         final responseGenres = await tmdbProvider.fetchGenres();
         final responseSearchResults =
             await tmdbProvider.fetchSearchResults(event.query);
-        responseSearchResults.genresList = responseGenres.genresList;
+        responseSearchResults.allGenresList = responseGenres.genresList;
         responseSearchResults.searchResultsList =
             responseSearchResults.moviesList;
         emit(MovieLoadedState(responseSearchResults));
@@ -82,54 +82,47 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
       }
     });
 
+    //Filters out movie results via genre and release year
     on<FilterChosenEvent>((event, emit) async {
       try {
-        event.chosenGenreIDs.forEach(
-          (element) {
-            print(element);
-          },
-        );
-        print(event.chosenYear);
         emit(MovieLoadingState());
-
         List<Movie> filteredMovieListByGenre = [];
         List<Movie> filteredMovieListByYear = [];
         List<Movie> initialResultsWithoutFilter =
-            event.searchResults.searchResultsList!;
-        List<Movie> result = [];
+            event.searchResultsResponse.searchResultsList!;
         int? year = event.chosenYear;
         List<int> genres = event.chosenGenreIDs;
 
         if (year == null && genres.isEmpty) {
-          event.searchResults.moviesList = initialResultsWithoutFilter;
+          event.searchResultsResponse.moviesList = initialResultsWithoutFilter;
         } else if (year == null && genres.isNotEmpty) {
-          event.searchResults.listChosenGenresFilter = genres;
-          for (var movie in event.searchResults.searchResultsList!) {
+          event.searchResultsResponse.chosenGenresList = genres;
+          for (var movie in event.searchResultsResponse.searchResultsList!) {
             if (event.chosenGenreIDs.every((chosenGenreID) =>
                 movie.genresIdList.contains(chosenGenreID))) {
               filteredMovieListByGenre.add(movie);
             }
           }
-          event.searchResults.moviesList = filteredMovieListByGenre;
+          event.searchResultsResponse.moviesList = filteredMovieListByGenre;
         } else if (year != null && genres.isEmpty) {
-          event.searchResults.year = event.chosenYear!;
-          for (var movie in event.searchResults.searchResultsList!) {
+          event.searchResultsResponse.chosenYear = event.chosenYear!;
+          for (var movie in event.searchResultsResponse.searchResultsList!) {
             DateTime movieDateTime = DateTime.parse(movie.releaseDate);
             if (event.chosenYear == movieDateTime.year) {
               filteredMovieListByYear.add(movie);
             }
           }
-          event.searchResults.moviesList = filteredMovieListByYear;
+          event.searchResultsResponse.moviesList = filteredMovieListByYear;
         } else if (year != null && genres.isNotEmpty) {
-          event.searchResults.listChosenGenresFilter = genres;
-          event.searchResults.year = event.chosenYear!;
-          for (var movie in event.searchResults.searchResultsList!) {
+          event.searchResultsResponse.chosenGenresList = genres;
+          event.searchResultsResponse.chosenYear = event.chosenYear!;
+          for (var movie in event.searchResultsResponse.searchResultsList!) {
             if (event.chosenGenreIDs.every((chosenGenreID) =>
                 movie.genresIdList.contains(chosenGenreID))) {
               filteredMovieListByGenre.add(movie);
             }
           }
-          for (var movie in event.searchResults.searchResultsList!) {
+          for (var movie in event.searchResultsResponse.searchResultsList!) {
             DateTime movieDateTime = DateTime.parse(movie.releaseDate);
             if (event.chosenYear == movieDateTime.year) {
               filteredMovieListByYear.add(movie);
@@ -137,55 +130,9 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           }
           filteredMovieListByGenre.removeWhere(
               (element) => !filteredMovieListByYear.contains(element));
-          event.searchResults.moviesList = filteredMovieListByGenre;
+          event.searchResultsResponse.moviesList = filteredMovieListByGenre;
         }
-
-        // if (event.chosenGenreIDs.isEmpty && event.chosenYear == 0) {
-        //   event.searchResults.moviesList =
-        //       event.searchResults.searchResultsList;
-        // } else {
-        //   if (event.chosenGenreIDs.isNotEmpty) {
-        //   } else {
-        //     if (event.chosenYear != 0) {
-        //       filteredMovieListByGenre = [];
-        //     } else {
-        //       filteredMovieListByGenre = event.searchResults.searchResultsList!;
-        //     }
-        //   }
-        //   if (event.chosenYear != 0) {
-        //   } else {
-        //     if (event.chosenGenreIDs.isEmpty) {
-        //       filteredMovieListByYear = event.searchResults.searchResultsList!;
-        //     } else {
-        //       filteredMovieListByYear = [];
-        //     }
-        //   }
-        // }
-
-        // filteredMovieListByGenre.forEach((element) {
-        //   print(element.originalTitle);
-        // });
-        // filteredMovieListByYear.forEach((element) {
-        //   print('year ' + element.originalTitle);
-        // // });
-        // List<Movie> resultList = [];
-        // // if (filteredMovieListByGenre.isNotEmpty &&
-        // //     filteredMovieListByYear.isNotEmpty) {
-
-        // // }
-        // if (filteredMovieListByYear.isEmpty &&
-        //     filteredMovieListByGenre.isEmpty) {
-        //   resultList = event.searchResults.searchResultsList!;
-        // } else if (filteredMovieListByYear.isEmpty) {
-        //   resultList = filteredMovieListByGenre;
-        // } else if (filteredMovieListByYear.isEmpty)
-
-        // List<Movie> allResults =
-        //     filteredMovieListByGenre + filteredMovieListByYear;
-        // allResults.addAll(filteredMovieListByYear);
-        // event.searchResults.moviesList = resultList.toSet().toList();
-
-        emit(MovieLoadedState(event.searchResults));
+        emit(MovieLoadedState(event.searchResultsResponse));
       } on Error {
         emit(const MoviesError(
             "Unable to fetch data. Please check your internet connection!"));

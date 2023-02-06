@@ -19,10 +19,11 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, searchScreenRoute);
-              },
-              icon: const Icon(Icons.search))
+            onPressed: () {
+              Navigator.pushNamed(context, searchScreenRoute);
+            },
+            icon: const Icon(Icons.search),
+          )
         ],
       );
     } else {

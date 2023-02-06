@@ -26,11 +26,11 @@ class MovieInitialState extends MovieState {}
 class MovieLoadingState extends MovieState {}
 
 class MovieLoadedState extends MovieState {
-  final MovieResponse popularMoviesResponse;
-  const MovieLoadedState(this.popularMoviesResponse);
+  final MovieResponse movieResponse;
+  const MovieLoadedState(this.movieResponse);
 
   @override
-  List<Object?> get props => [popularMoviesResponse.moviesList];
+  List<Object?> get props => [movieResponse.moviesList];
 }
 
 class FavoriteMoviesLoadedState extends MovieState {
