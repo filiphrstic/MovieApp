@@ -40,18 +40,19 @@ class _SearchPageState extends State<SearchPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20.0, left: 20.0),
-                          child: Text(
-                            'Search movies',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+                      //     child: Text(
+                      //       'Search movies',
+                      //       style: Theme.of(context).textTheme.titleLarge,
+                      //     ),
+                      //   ),
+                      // ),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
                         child: TextField(
                           controller: textController,
                           decoration: InputDecoration(

@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/blocs/checkbox_cubit/checkbox_cubit.dart';
@@ -103,46 +104,63 @@ Widget buildSearchResultsMovieList(
               return Expanded(
                 child: Column(
                   children: [
-                    Expanded(
-                        child: BlocProvider(
+                    // Expanded(
+                    // child:
+                    BlocProvider(
                       create: (context) => checkboxCubit,
                       child: BlocBuilder<CheckboxCubit, CheckboxState>(
                           builder: (context, checkboxState) {
-                        return GridView.builder(
-                            itemCount:
-                                state.popularMoviesResponse.genresList!.length,
-                            itemBuilder: (context, index) {
-                              final genre = state
-                                  .popularMoviesResponse.genresList![index];
-                              return CheckboxListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  activeColor: primaryColor,
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  dense: true,
-                                  title: Text(genre.name),
-                                  value: genre.isChecked,
-                                  onChanged: ((value) {
-                                    genre.isChecked = value!;
-                                    checkboxCubit.changeValue(value);
-                                    if (value) {
-                                      chosenGenreIds.add(genre.id);
-                                    } else {
-                                      chosenGenreIds.removeWhere(
-                                          (element) => element == genre.id);
-                                    }
-                                    searchResultsMovieBloc.add(
-                                        FilterChosenEvent(chosenGenreIds,
-                                            state.popularMoviesResponse));
-                                  }));
-                            },
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 6,
-                            ));
+                        return ExpandablePanel(
+                          collapsed: Container(),
+                          header: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              'Filter by genres',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                          )),
+                          expanded: SizedBox(
+                            height: 150,
+                            child: GridView.builder(
+                                itemCount: state
+                                    .popularMoviesResponse.genresList!.length,
+                                itemBuilder: (context, index) {
+                                  final genre = state
+                                      .popularMoviesResponse.genresList![index];
+                                  return CheckboxListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      activeColor: primaryColor,
+                                      controlAffinity:
+                                          ListTileControlAffinity.leading,
+                                      dense: true,
+                                      title: Text(genre.name),
+                                      value: genre.isChecked,
+                                      onChanged: ((value) {
+                                        genre.isChecked = value!;
+                                        checkboxCubit.changeValue(value);
+                                        if (value) {
+                                          chosenGenreIds.add(genre.id);
+                                        } else {
+                                          chosenGenreIds.removeWhere(
+                                              (element) => element == genre.id);
+                                        }
+                                        searchResultsMovieBloc.add(
+                                            FilterChosenEvent(chosenGenreIds,
+                                                state.popularMoviesResponse));
+                                      }));
+                                },
+                                gridDelegate:
+                                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 6,
+                                )),
+                          ),
+                        );
                       }),
-                    )),
+                    ),
+                    // ),
+
                     Expanded(
                       child: ListView.builder(
                         itemCount:
