@@ -16,4 +16,4 @@ Functionalities implemented:
 
 <h5>Screenshots</h5>
 
-<img src="screenshots/homepage.png" width="250"> <img src="screenshots/favorites.png" width="250"> <img src="screenshots/details.png" width="250"> <img src="screenshots/search.png" width="250"> <img src="screenshots/filter.png" width="250">
+<img src="screenshots/homepage.png" width="250"> <img src="screenshots/favorite.png" width="250"> <img src="screenshots/details.png" width="250"> <img src="screenshots/search.png" width="250"> <img src="screenshots/filter.png" width="250">
