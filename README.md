@@ -1,6 +1,4 @@
-Movie app
-
-
+<h3>Movie app</h3>
 
 State management - BLoC
 
