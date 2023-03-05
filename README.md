@@ -13,3 +13,7 @@ Functionalities implemented:
 - Search movies by title
 - Filter search results via genres and/or release year
 - Reset filter with reset button and display most recent search results
+
+<h5>Screenshots</h5>
+
+<img src="screenshots/homepage.png" width="250"> <img src="screenshots/favorites.png" width="250"> <img src="screenshots/details.png" width="250"> <img src="screenshots/search.png" width="250"> <img src="screenshots/filter.png" width="250">
