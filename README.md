@@ -1,6 +1,7 @@
 Movie app
 
 
+
 State management - BLoC
 
 API communication - Dio (www.themoviedb.org)
